@@ -4,6 +4,10 @@ import { loadSearch, search, pageRef, SOURCES } from "./search.js?v=6";
 
 const VERSION = "v0.4";
 const CONTACT = { mail: "jahwalktg@gmail.com" };   // 2026-10-26 전화번호는 뺌(메일만)
+// 의견 설문(구글 설문 「국기초 가늠표 — 의견 보내기」, jahwalktg 계정, 2026-10-26). 미리 채우기: 종류·내용·쓰던 화면
+const FB_FORM = { url: "https://docs.google.com/forms/d/e/1FAIpQLSe3RkitFOW0kYWmdlF8xSf4tufd_9ZS-uC0OaRBpyVcdclE_w/viewform", type: "entry.390376584", text: "entry.1630338836", ctx: "entry.531365058" };
+// 종류 보기는 설문 보기와 글자까지 같아야 미리 채워진다
+const FB_TYPES = ["숫자나 계산이 틀렸어요", "근거 쪽수나 지침 내용이 다른 것 같아요", "쉬운 말 풀이가 이상하거나 어려워요", "글로 쓴 상황을 잘못 읽어요", "화면이 불편해요 (휴대폰·인쇄·버튼)", "이런 기능이 있으면 좋겠어요", "고맙다는 말 / 그 밖"];
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const man = (v) => (v == null || v === "" ? 0 : Math.round(parseFloat(String(v).replace(/,/g, "")) * 10000));
@@ -537,14 +541,19 @@ function openFeedback() {
   $("#modal").innerHTML = `<div class="modal-bg"><div class="modal">
     <button class="x" id="fb-x">✕</button>
     <h3>💌 의견 보내기</h3>
-    <p class="muted small" style="margin:0 0 8px">틀린 숫자, 이상한 계산, 안 되는 것, 있었으면 하는 것. 무엇이든요. 메일 앱이 열리고, 안 열리면 내용을 복사해서 ${CONTACT.mail}로 보내 주세요.</p>
-    <label>종류</label><select id="fb-type"><option>오류(틀린 숫자·안 되는 것)</option><option>수정 제안</option><option>의견·바람</option><option>쉬운 말 풀이가 이상해요</option></select>
+    <p class="muted small" style="margin:0 0 8px">틀린 숫자, 이상한 계산, 안 되는 것, 있었으면 하는 것. 무엇이든요. <b>설문으로 보내기</b>는 이름 없이 바로 보낼 수 있고(적은 글이 설문 칸에 미리 들어가요), 메일로도 받아요(${CONTACT.mail}).</p>
+    <label>종류</label><select id="fb-type">${FB_TYPES.map((t) => `<option>${t}</option>`).join("")}</select>
     <label>내용</label><textarea id="fb-text" placeholder="어느 화면에서, 무엇을 넣었더니, 어떻게 나왔는지 적어 주시면 고치기 쉬워요. 개인정보는 적지 마세요."></textarea>
     <div class="small muted" style="margin-top:6px">자동으로 붙는 정보: ${esc(ctx)}</div>
-    <div class="btns"><button id="fb-mail">메일 앱으로 보내기</button><button class="ghost" id="fb-copy">내용 복사</button></div>
+    <div class="btns"><button id="fb-form">설문으로 보내기</button><button class="ghost" id="fb-mail">메일 앱으로 보내기</button><button class="ghost" id="fb-copy">내용 복사</button></div>
     <div id="fb-msg" class="small muted" style="margin-top:8px"></div>
   </div></div>`;
   const body = () => `[국기초 가늠표 ${VERSION} · ${$("#fb-type").value}]\n\n${$("#fb-text").value}\n\n---\n${ctx}`;
+  $("#fb-form").onclick = () => {   // 새 창에 설문을 미리 채워 연다 — 제출은 설문 창에서 직접
+    const q = new URLSearchParams({ usp: "pp_url", [FB_FORM.type]: $("#fb-type").value, [FB_FORM.text]: $("#fb-text").value.slice(0, 1500), [FB_FORM.ctx]: ctx });
+    window.open(FB_FORM.url + "?" + q.toString(), "_blank", "noopener");
+    $("#fb-msg").textContent = "새 창의 설문에서 내용을 확인하고 「제출」을 눌러 주세요. 창이 안 열리면 '내용 복사' 뒤 메일로 보내 주세요.";
+  };
   $("#fb-x").onclick = closeFeedback; $(".modal-bg").onclick = (e) => { if (e.target.classList.contains("modal-bg")) closeFeedback(); };
   $("#fb-mail").onclick = () => { location.href = `mailto:${CONTACT.mail}?subject=${encodeURIComponent("[국기초 가늠표] " + $("#fb-type").value)}&body=${encodeURIComponent(body())}`; $("#fb-msg").textContent = "메일 앱이 열리지 않으면 '내용 복사'를 눌러 " + CONTACT.mail + " 로 보내 주세요."; };
   $("#fb-copy").onclick = async () => { try { await navigator.clipboard.writeText(body()); $("#fb-msg").textContent = "복사했어요. " + CONTACT.mail + " 로 붙여 넣어 보내 주세요."; } catch { prompt("아래 내용을 복사해 " + CONTACT.mail + " 로 보내 주세요", body()); } };
