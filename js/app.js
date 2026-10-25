@@ -3,7 +3,7 @@ import { parseFreeText } from "./parse.js?v=6";
 import { loadSearch, search, pageRef, SOURCES } from "./search.js?v=6";
 
 const VERSION = "v0.4";
-const CONTACT = { mail: "jahwalktg@gmail.com", phone: "010-9165-1804" };
+const CONTACT = { mail: "jahwalktg@gmail.com" };   // 2026-10-26 전화번호는 뺌(메일만)
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const man = (v) => (v == null || v === "" ? 0 : Math.round(parseFloat(String(v).replace(/,/g, "")) * 10000));
@@ -541,7 +541,7 @@ function openFeedback() {
     <label>종류</label><select id="fb-type"><option>오류(틀린 숫자·안 되는 것)</option><option>수정 제안</option><option>의견·바람</option><option>쉬운 말 풀이가 이상해요</option></select>
     <label>내용</label><textarea id="fb-text" placeholder="어느 화면에서, 무엇을 넣었더니, 어떻게 나왔는지 적어 주시면 고치기 쉬워요. 개인정보는 적지 마세요."></textarea>
     <div class="small muted" style="margin-top:6px">자동으로 붙는 정보: ${esc(ctx)}</div>
-    <div class="btns"><button id="fb-mail">메일 앱으로 보내기</button><button class="ghost" id="fb-copy">내용 복사</button><a class="ghost" style="padding:.78rem 1rem;border:1.5px solid var(--line);border-radius:14px;text-decoration:none;color:var(--navy)" href="tel:${CONTACT.phone}">📞 ${CONTACT.phone}</a></div>
+    <div class="btns"><button id="fb-mail">메일 앱으로 보내기</button><button class="ghost" id="fb-copy">내용 복사</button></div>
     <div id="fb-msg" class="small muted" style="margin-top:8px"></div>
   </div></div>`;
   const body = () => `[국기초 가늠표 ${VERSION} · ${$("#fb-type").value}]\n\n${$("#fb-text").value}\n\n---\n${ctx}`;
