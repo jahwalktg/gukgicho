@@ -202,6 +202,9 @@ footer { padding: 20px 16px 50px; }
 .maker h3 { color: #fff; margin: 0 0 4px; }
 .maker p { margin: 0; font-size: .9rem; opacity: .9; }
 .maker .mini { font-size: .78rem; opacity: .7; margin-top: 6px; }
+.maker .mini a { color: #fff; text-decoration: underline; }
+.other-tool { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.other-tool a { font-weight: 700; }
 .maker button.mint { white-space: nowrap; }
 .modal-bg { position: fixed; inset: 0; background: rgba(21,34,63,.45); display: grid; place-items: center; z-index: 60; padding: 16px; }
 .modal { background: #fff; border-radius: 22px; padding: 22px; width: min(560px, 100%); box-shadow: 0 30px 80px rgba(0,0,0,.3); }

@@ -2,7 +2,7 @@ import { compute, withExtraIncome, fmtMan, fmtWon, REGIONS, medianIncome, thresh
 import { parseFreeText } from "./parse.js?v=6";
 import { loadSearch, search, pageRef, SOURCES } from "./search.js?v=6";
 
-const VERSION = "v0.4";
+const VERSION = "v0.5";
 const CONTACT = { mail: "jahwalktg@gmail.com" };   // 2026-10-26 전화번호는 뺌(메일만)
 // 의견 설문(구글 설문 「국기초 가늠표 — 의견 보내기」, jahwalktg 계정, 2026-10-26). 미리 채우기: 종류·내용·쓰던 화면
 const FB_FORM = { url: "https://docs.google.com/forms/d/e/1FAIpQLSe3RkitFOW0kYWmdlF8xSf4tufd_9ZS-uC0OaRBpyVcdclE_w/viewform", type: "entry.390376584", text: "entry.1630338836", ctx: "entry.531365058" };
