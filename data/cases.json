@@ -1,0 +1,283 @@
+{
+  "_about": "가상 사례 5건(교육용). 전부 가상의 인물·숫자. 'note'는 상담일지처럼 쓴 글 — 글로 쓰기 모드에 그대로 붙여도 읽힌다. 'input'은 질문 모드 프리셋. 'expected'는 tools/cases_check.mjs 가 엔진으로 채운다(정답표).",
+  "cases": [
+    {
+      "id": "A",
+      "title": "혼자 사는 68세 박○○ 어르신 — 통장에 1,500만원",
+      "lesson": "금융재산은 생활준비금 500만원을 빼고, 남은 돈도 기본재산액(서울 9,900만원) 안에서는 환산되지 않는다. '통장에 돈이 있으면 안 된다'는 옛 상식이 2026년에는 다르게 나온다.",
+      "note": "서울 관악구에 혼자 사시는 68세 여성 어르신. 월세 보증금 500만원에 월세 30만원. 일은 안 하시고 매달 노령연금 25만원 받으심. 예금 통장에 1,500만원쯤 있다고 함. 차는 없고 빚도 없음. 자녀는 둘인데 각자 평범한 직장이라 연봉 1억 넘는 자녀는 없음.",
+      "input": {
+        "region": "seoul",
+        "members": [
+          {
+            "age": 68,
+            "publicTransfer": 250000
+          }
+        ],
+        "housing": {
+          "type": "monthly",
+          "value": 5000000,
+          "rent": 300000,
+          "living": true
+        },
+        "financial": {
+          "general": 15000000,
+          "longTerm": 0
+        },
+        "cars": [],
+        "debt": 0,
+        "obligorHigh": false,
+        "unknown": []
+      },
+      "expected": {
+        "n": 1,
+        "median": 2564238,
+        "recognized": 250000,
+        "recognizedMed": 250000,
+        "incomeEval": 250000,
+        "propertyConv": 0,
+        "saenggye": "○",
+        "saenggyeAmount": 570556,
+        "uiryo": "△",
+        "jugeo": "○",
+        "gyoyuk": "○",
+        "jahwal": {
+          "special": false,
+          "hope1": false,
+          "hope2": false,
+          "youth": false
+        }
+      }
+    },
+    {
+      "id": "B",
+      "title": "자활근로 참여 44세 한부모 김○○ — 자녀 둘, 10년 된 차",
+      "lesson": "자활근로 소득은 30%를 빼 주고(의료급여 기준에도), 2,000cc 미만·10년 넘은 승용차는 일반재산(4.17%)이며, 2026년부터 자녀 2명이면 다자녀 기준도 적용된다.",
+      "note": "경기 수원 거주 44세 여성, 한부모. 자녀 14세·10세와 셋이 삶. 전세 보증금 8,000만원. 우리 센터 자활근로(시장진입형) 참여 중, 월 130만원 정도. 통장 300만원. 2015년식 1,998cc 승용차 한 대(중고 시세 450만원쯤). 빚 없음. 부모님은 지방에 계시고 소득 거의 없음.",
+      "input": {
+        "region": "gyeonggi",
+        "members": [
+          {
+            "age": 44,
+            "earned": {
+              "type": "jahwal",
+              "amount": 1300000
+            }
+          },
+          {
+            "age": 14
+          },
+          {
+            "age": 10
+          }
+        ],
+        "housing": {
+          "type": "jeonse",
+          "value": 80000000,
+          "living": true
+        },
+        "financial": {
+          "general": 3000000,
+          "longTerm": 0
+        },
+        "cars": [
+          {
+            "kind": "passenger",
+            "cc": 1998,
+            "year": 2015,
+            "value": 4500000,
+            "use": "normal",
+            "seats": 5
+          }
+        ],
+        "debt": 0,
+        "obligorHigh": false,
+        "unknown": []
+      },
+      "expected": {
+        "n": 3,
+        "median": 5359036,
+        "recognized": 1097650,
+        "recognizedMed": 1097650,
+        "incomeEval": 910000,
+        "propertyConv": 187650,
+        "saenggye": "○",
+        "saenggyeAmount": 617242,
+        "uiryo": "△",
+        "jugeo": "○",
+        "gyoyuk": "○",
+        "jahwal": {
+          "special": false,
+          "hope1": true,
+          "hope2": false,
+          "youth": false
+        }
+      }
+    },
+    {
+      "id": "C",
+      "title": "70대 부부 정○○ — 아들 연봉이 1억 4천만원",
+      "lesson": "생계급여의 부양의무자 기준은 '폐지됐지만 예외 하나'(연 소득 1억 3천만원·일반재산 12억원 초과)가 남아 있다. 의료급여는 부양의무자 판정을 담당자가 따로 한다. 소득은 선 아래인데 생계급여가 안 되는 사례.",
+      "note": "전남 시골 읍에 사는 74세 남편·71세 아내. 자가 주택(시가표준액 1억원쯤)에 거주. 두 분 다 소득 없음, 연금도 없음. 통장 200만원. 차 없음, 빚 없음. 서울에 사는 아들이 대기업 다니고 연봉 1억 4천만원이라고 함. 딸은 전업주부.",
+      "input": {
+        "region": "other",
+        "members": [
+          {
+            "age": 74
+          },
+          {
+            "age": 71
+          }
+        ],
+        "housing": {
+          "type": "own",
+          "value": 100000000,
+          "living": true
+        },
+        "financial": {
+          "general": 2000000,
+          "longTerm": 0
+        },
+        "cars": [],
+        "debt": 0,
+        "obligorHigh": true,
+        "unknown": []
+      },
+      "expected": {
+        "n": 2,
+        "median": 4199292,
+        "recognized": 488800,
+        "recognizedMed": 488800,
+        "incomeEval": 0,
+        "propertyConv": 488800,
+        "saenggye": "×",
+        "saenggyeAmount": 0,
+        "uiryo": "△",
+        "jugeo": "○",
+        "gyoyuk": "○",
+        "jahwal": {
+          "special": false,
+          "hope1": false,
+          "hope2": false,
+          "youth": false
+        }
+      }
+    },
+    {
+      "id": "D",
+      "title": "자활근로 참여 55세 1인 이○○ — 자활소득이 늘면?",
+      "lesson": "변화 보기용. 자활근로 100만원이면 생계급여가 조금 남고, 30만원 늘면 생계는 끊기지만 의료는 남고(자활 30% 공제가 의료 기준에도 적용), 60만원 늘면 의료 선도 넘어 자활급여특례(5년)가 보인다. 희망저축계좌Ⅰ은 처음부터 해당.",
+      "note": "부산 사하구, 55세 남성 혼자 삶. 월세 보증금 1,000만원·월세 35만원. 자활근로(사회서비스형) 월 100만원. 통장 100만원. 차 없음. 대출 200만원. 가족은 형제뿐.",
+      "input": {
+        "region": "metro_sejong_changwon",
+        "members": [
+          {
+            "age": 55,
+            "earned": {
+              "type": "jahwal",
+              "amount": 1000000
+            }
+          }
+        ],
+        "housing": {
+          "type": "monthly",
+          "value": 10000000,
+          "rent": 350000,
+          "living": true
+        },
+        "financial": {
+          "general": 1000000,
+          "longTerm": 0
+        },
+        "cars": [],
+        "debt": 2000000,
+        "obligorHigh": false,
+        "unknown": []
+      },
+      "expected": {
+        "n": 1,
+        "median": 2564238,
+        "recognized": 700000,
+        "recognizedMed": 700000,
+        "incomeEval": 700000,
+        "propertyConv": 0,
+        "saenggye": "○",
+        "saenggyeAmount": 120556,
+        "uiryo": "△",
+        "jugeo": "○",
+        "gyoyuk": "○",
+        "jahwal": {
+          "special": false,
+          "hope1": true,
+          "hope2": false,
+          "youth": false
+        },
+        "plus60_jahwal": {
+          "recognized": 1120000,
+          "recognizedMed": 1120000,
+          "saenggyeAmount": 0,
+          "uiryo": "×",
+          "special": true
+        },
+        "plus30_jahwal": {
+          "recognized": 910000,
+          "recognizedMed": 910000,
+          "saenggyeAmount": 0,
+          "uiryo": "△",
+          "special": false
+        }
+      }
+    },
+    {
+      "id": "E",
+      "title": "34세 청년 최○○ — 아르바이트 100만원, 대출 300만원",
+      "lesson": "2026년부터 34세 이하는 60만원을 먼저 빼고 나머지의 30%를 더 뺀다(복지부 보도자료의 예시 그대로). 금융기관 대출은 부채로 재산에서 뺀다. 소득 100만원인데 생계급여가 54만원쯤 나오는 사례.",
+      "note": "서울 강북구, 34세 남성 1인 가구. 월세 보증금 300만원·월세 40만원. 편의점 아르바이트로 월 100만원. 통장 400만원. 은행 대출 300만원. 차 없음. 부모님은 지방에서 농사, 소득 적음.",
+      "input": {
+        "region": "seoul",
+        "members": [
+          {
+            "age": 34,
+            "earned": {
+              "type": "regular",
+              "amount": 1000000
+            }
+          }
+        ],
+        "housing": {
+          "type": "monthly",
+          "value": 3000000,
+          "rent": 400000,
+          "living": true
+        },
+        "financial": {
+          "general": 4000000,
+          "longTerm": 0
+        },
+        "cars": [],
+        "debt": 3000000,
+        "obligorHigh": false,
+        "unknown": []
+      },
+      "expected": {
+        "n": 1,
+        "median": 2564238,
+        "recognized": 280000,
+        "recognizedMed": 280000,
+        "incomeEval": 280000,
+        "propertyConv": 0,
+        "saenggye": "○",
+        "saenggyeAmount": 540556,
+        "uiryo": "△",
+        "jugeo": "○",
+        "gyoyuk": "○",
+        "jahwal": {
+          "special": false,
+          "hope1": true,
+          "hope2": false,
+          "youth": true
+        }
+      }
+    }
+  ]
+}

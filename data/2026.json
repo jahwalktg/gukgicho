@@ -1,0 +1,414 @@
+{
+  "_about": "국기초 도구 연도 데이터 2026 — 초안 2026-10-24. 금액 단위 원, 비율은 소수. 출처·설명은 같은 폴더 ../연도데이터표_2026.md",
+  "year": 2026,
+  "effective": "2026-01-01",
+  "sources": {
+    "gosi": "보건복지부 고시 제2025-135호 (2025-08-01, 시행 2026-01-01)",
+    "press_20250731": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1487098",
+    "press_20260101": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1488477",
+    "guide": "2026년 국민기초생활보장 사업안내 (보건복지부, 2026-01-01 발행)"
+  },
+  "median_income": {
+    "1": 2564238,
+    "2": 4199292,
+    "3": 5359036,
+    "4": 6494738,
+    "5": 7556719,
+    "6": 8555952,
+    "7": 9515150,
+    "step_8plus": 959198
+  },
+  "benefit_ratio": {
+    "saenggye": 0.32,
+    "uiryo": 0.4,
+    "jugeo": 0.48,
+    "gyoyuk": 0.5
+  },
+  "selection": {
+    "saenggye": {
+      "1": 820556,
+      "2": 1343773,
+      "3": 1714892,
+      "4": 2078316,
+      "5": 2418150,
+      "6": 2737905,
+      "7": 3044848
+    },
+    "uiryo": {
+      "1": 1025695,
+      "2": 1679717,
+      "3": 2143614,
+      "4": 2597895,
+      "5": 3022688,
+      "6": 3422381,
+      "7": 3806060
+    },
+    "jugeo": {
+      "1": 1230834,
+      "2": 2015660,
+      "3": 2572337,
+      "4": 3117474,
+      "5": 3627225,
+      "6": 4106857,
+      "7": 4567272
+    },
+    "gyoyuk": {
+      "1": 1282119,
+      "2": 2099646,
+      "3": 2679518,
+      "4": 3247369,
+      "5": 3778360,
+      "6": 4277976,
+      "7": 4757575
+    },
+    "_rule_8plus": "7인 기준 + (7인-6인) × (가구원-7)"
+  },
+  "regions": [
+    "seoul",
+    "gyeonggi",
+    "metro_sejong_changwon",
+    "other"
+  ],
+  "basic_property": {
+    "seoul": 99000000,
+    "gyeonggi": 80000000,
+    "metro_sejong_changwon": 77000000,
+    "other": 53000000
+  },
+  "housing_property_cap": {
+    "seoul": 172000000,
+    "gyeonggi": 151000000,
+    "metro_sejong_changwon": 146000000,
+    "other": 112000000
+  },
+  "basic_property_deduction_order": [
+    "housing",
+    "general",
+    "financial"
+  ],
+  "conversion_rate_monthly": {
+    "housing": 0.0104,
+    "general": 0.0417,
+    "financial": 0.0626,
+    "car_full": 1.0
+  },
+  "financial_deduction": {
+    "living_reserve_per_household": 5000000,
+    "long_term_savings": {
+      "annual_cap": 5000000,
+      "total_cap": 15000000,
+      "min_years": 3
+    },
+    "asset_building_accounts_excluded": [
+      "희망저축계좌Ⅰ",
+      "희망저축계좌Ⅱ",
+      "청년내일저축계좌",
+      "디딤씨앗통장"
+    ]
+  },
+  "earned_income_deduction": {
+    "_rule": "여러 항목 해당 시 가장 유리한 하나. fixed 를 먼저 빼고 나머지에 rate",
+    "default": {
+      "fixed": 0,
+      "rate": 0.3,
+      "who": "생계·주거·교육급여 수급(권)자 일반"
+    },
+    "youth_34_student": {
+      "fixed": 600000,
+      "rate": 0.3,
+      "who": "34세 이하(35세 생일 전월까지), 대학생(누적 6년)"
+    },
+    "senior65_disabled_nk": {
+      "fixed": 200000,
+      "rate": 0.3,
+      "who": "65세 이상, 등록장애인, 북한이탈주민(특례기간), 35세 이상 초중고 재학생"
+    },
+    "disabled_rehab": {
+      "fixed": 200000,
+      "rate": 0.5,
+      "who": "등록장애인의 장애인·정신질환자 직업재활사업 참여 소득"
+    },
+    "pregnant": {
+      "fixed": 0,
+      "rate": 0.3,
+      "who": "임신 중·분만 후 6개월 미만"
+    },
+    "jahwal_work": {
+      "fixed": 0,
+      "rate": 0.3,
+      "who": "자활근로 참여 소득(자활근로 소득공제). 공제액 같으면 이것을 우선"
+    }
+  },
+  "car": {
+    "default_rate": 1.0,
+    "excluded_one_each": {
+      "disabled_use": "장애 정도 심한 등록장애인·상이 1~3급 본인 이동수단, 배기량 < 2000cc",
+      "livelihood": "생업용: 승용 < 2000cc / 11인승 이상 승합 / 화물 / 특수"
+    },
+    "general_rate_cases": {
+      "passenger": {
+        "cc_lt": 2000,
+        "age_ge": 10,
+        "or_value_lt": 5000000
+      },
+      "multi_child_or_6plus": {
+        "children_under18_ge": 2,
+        "or_household_ge": 6,
+        "cc_lt": 2500,
+        "seats_ge": 7,
+        "age_ge": 10,
+        "or_value_lt": 5000000
+      },
+      "van_truck_small": {
+        "size": "소형 이하",
+        "age_ge": 10,
+        "or_value_lt": 5000000
+      },
+      "motorcycle": {
+        "cc_le": 260
+      }
+    },
+    "holding_limit": {
+      "general_household": 2,
+      "disabled_household": 2
+    },
+    "min_wage_daily_2026": 82560
+  },
+  "obligor": {
+    "saenggye": {
+      "applies": false,
+      "exclusion_if_obligor_exceeds": {
+        "annual_income": 130000000,
+        "monthly_income": 10840000,
+        "general_property": 1200000000
+      }
+    },
+    "jugeo": {
+      "applies": false
+    },
+    "gyoyuk": {
+      "applies": false
+    },
+    "uiryo": {
+      "applies": true,
+      "scope": "1촌 직계혈족 및 그 배우자(사망한 1촌의 배우자 제외)",
+      "no_ability_if": {
+        "income_lt": "A*0.40 + B*1.00",
+        "property_conv_lt": "(A+B)*0.18",
+        "_A": "수급(권)자 가구 기준 중위소득",
+        "_B": "부양의무자 가구 기준 중위소득"
+      },
+      "vulnerable_income_rule": "max(A*0.40 + B*1.00, (A+B)*0.74)",
+      "buyangbi": "폐지 (2026-01)",
+      "basic_property": {
+        "seoul": 364000000,
+        "gyeonggi": 294000000,
+        "metro_sejong_changwon": 283000000,
+        "other": 195000000
+      },
+      "conversion_rate_monthly": {
+        "housing": 0.0104,
+        "other": 0.0208
+      },
+      "living_reserve": 5000000
+    }
+  },
+  "property_special_no_work_capacity": {
+    "net_property_cap": {
+      "seoul": 143000000,
+      "gyeonggi": 125000000,
+      "metro_sejong_changwon": 120000000,
+      "other": 91000000
+    },
+    "financial_cap": {
+      "seoul": 54000000,
+      "gyeonggi": 54000000,
+      "metro_sejong_changwon": 54000000,
+      "other": 34000000
+    },
+    "no_full_rate_car": true
+  },
+  "jahwal": {
+    "jahwal_special": {
+      "trigger": "자활사업 소득으로 3개월 평균 소득인정액 > 의료급여 선정기준",
+      "years": 5
+    },
+    "hope_savings_1": {
+      "who": "생계·의료 수급, 근로·사업소득 ≥ 기준중위소득 40%의 60%",
+      "self_monthly": [
+        100000,
+        500000
+      ],
+      "match_monthly": 300000
+    },
+    "hope_savings_2": {
+      "who": "주거·교육·차상위, 소득인정액 ≤ 기준중위소득 50%",
+      "self_monthly": [
+        100000,
+        500000
+      ],
+      "match_monthly_by_year": [
+        100000,
+        200000,
+        300000
+      ]
+    },
+    "youth_tomorrow_savings": {
+      "age": [
+        15,
+        39
+      ],
+      "income_cap_ratio": 0.5
+    },
+    "work_pay_2026": {
+      "_source": "2026년 자활사업안내 vi(주요 변경 내용, 자활근로 급여단가·표준소득액) · p.72(사업유형) · p.73(근무 시간). 실비(교통비·식대) 제외. 인턴형·복지자활도우미형은 시장진입형 단가, 사회복지시설도우미형은 사회서비스형 단가",
+      "days_per_month": 26,
+      "types": {
+        "market": {
+          "name": "시장진입형",
+          "daily": 62080,
+          "monthly_standard": 1614080,
+          "hours": 8
+        },
+        "social": {
+          "name": "사회서비스형",
+          "daily": 53840,
+          "monthly_standard": 1399840,
+          "hours": 8
+        },
+        "maintain": {
+          "name": "근로유지형",
+          "daily": 29940,
+          "monthly_standard": 778440,
+          "hours": 5
+        }
+      }
+    },
+    "participation": {
+      "max_years": 5,
+      "gateway_months": 2,
+      "gateway_extend_months": 1,
+      "capacity_score": {
+        "maintain_below": 55,
+        "employment_from": 85
+      },
+      "_source": "2026년 자활사업안내 p.46(자활경로), p.62(Gateway·참여기간)"
+    }
+  },
+  "preview_2027": {
+    "_note": "고시 제2026-157호(2026-07-29, 시행 2027-01-01). 7인·기본재산액·공제 등은 2027 사업안내 발행 후 확정",
+    "median_income": {
+      "1": 2736042,
+      "2": 4480645,
+      "3": 5718091,
+      "4": 6929885,
+      "5": 8063019,
+      "6": 9129201
+    },
+    "selection": {
+      "saenggye": {
+        "1": 875533,
+        "2": 1433806,
+        "3": 1829789,
+        "4": 2217563,
+        "5": 2580166,
+        "6": 2921344
+      },
+      "uiryo": {
+        "1": 1094417,
+        "2": 1792258,
+        "3": 2287236,
+        "4": 2771954,
+        "5": 3225208,
+        "6": 3651680
+      },
+      "jugeo": {
+        "1": 1313300,
+        "2": 2150710,
+        "3": 2744684,
+        "4": 3326345,
+        "5": 3870249,
+        "6": 4382016
+      },
+      "gyoyuk": {
+        "1": 1368021,
+        "2": 2240323,
+        "3": 2859046,
+        "4": 3464943,
+        "5": 4031510,
+        "6": 4564601
+      }
+    }
+  },
+  "housing_rent_cap": {
+    "_about": "주거급여 임차가구 기준임대료(월, 원). 복지부 보도자료 2025-07-31 표(만원 단위)에서 옮김. 7인은 6인과 같고 8~9인은 6인의 10% 가산",
+    "grade_by_region": {
+      "seoul": 1,
+      "gyeonggi": 2,
+      "metro_sejong_changwon": 3,
+      "other": 4
+    },
+    "_region_note": "급지: 1 서울 / 2 경기·인천 / 3 광역시·세종·수도권 외 특례시 / 4 그 외. 이 도구의 지역 묶음에서 인천은 광역시 묶음이지만 급지는 2급지",
+    "1": {
+      "1": 369000,
+      "2": 414000,
+      "3": 492000,
+      "4": 571000,
+      "5": 591000,
+      "6": 699000,
+      "7": 699000
+    },
+    "2": {
+      "1": 300000,
+      "2": 335000,
+      "3": 401000,
+      "4": 463000,
+      "5": 479000,
+      "6": 568000,
+      "7": 568000
+    },
+    "3": {
+      "1": 247000,
+      "2": 275000,
+      "3": 327000,
+      "4": 381000,
+      "5": 394000,
+      "6": 463000,
+      "7": 463000
+    },
+    "4": {
+      "1": 212000,
+      "2": 238000,
+      "3": 283000,
+      "4": 329000,
+      "5": 340000,
+      "6": 402000,
+      "7": 402000
+    }
+  },
+  "education_support": {
+    "_about": "교육급여 교육활동지원비(연, 원). 복지부 보도자료 2025-07-31",
+    "elementary": 502000,
+    "middle": 699000,
+    "high": 860000,
+    "_etc": "고등학생 교과서비·입학금·수업료 실비(무상교육 제외 학교)"
+  },
+  "medical_copay": {
+    "_about": "의료급여 본인부담(2026, 현행 유지). 복지부 보도자료 2025-07-31",
+    "type1": {
+      "inpatient": "없음",
+      "clinic": 1000,
+      "hospital": 1500,
+      "tertiary": 2000,
+      "pharmacy": 500
+    },
+    "type2": {
+      "inpatient": "10%",
+      "clinic": 1000,
+      "hospital": "15%",
+      "tertiary": "15%",
+      "pharmacy": 500
+    },
+    "_note": "연 365회 초과 외래는 본인부담 30%(취약계층 예외). 1종·2종 구분은 근로능력 등으로 담당자가 정함"
+  }
+}

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>국기초 가늠표</title>
+<meta name="description" content="국민기초생활보장 수급을 내 상황으로 가늠해 보는 참고용 도구. 확정은 시·군·구 담당자가 합니다.">
+<link rel="stylesheet" href="css/style.css?v=15">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <img src="img/전신_미소.png" alt="굿균">
+      <div><h1>국기초 가늠표</h1><div class="tag">국민기초생활보장, 내 상황으로 가늠해 보기 · <span class="badge">참고용</span></div></div>
+    </div>
+    <nav class="tabs">
+      <button data-go="gate" class="on">가늠해 보기</button>
+      <button data-go="table">기준표</button>
+      <button data-go="jahwal">자활</button>
+      <button data-go="search">근거 찾기</button>
+      <button data-go="terms">쉬운 말</button>
+      <button data-go="about">안내</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- ① 들어가기: 히어로 + 면책 -->
+  <section id="v-gate" class="view on">
+    <div class="hero">
+      <div>
+        <h2>국기초, 외우지 말고<br>내 상황으로 가늠해 보세요</h2>
+        <p>몇 가지만 답하면 <b>나라의 기준에서 본 우리 집 한 달 소득</b>과 생계·의료·주거·교육급여의 자리를 한 장으로 보여 드려요. 소득이나 식구가 바뀌면 어떻게 달라지는지도 그 자리에서 움직여 봅니다.</p>
+        <div class="reassure"><span>🔒 저장하지 않아요</span><span>🙈 이름을 묻지 않아요</span><span>📄 숫자마다 근거 쪽수</span><span>🤖 AI 호출 없음</span></div>
+        <div class="tip">💡 점선 밑줄 말에 마우스를 올리면 쉬운 풀이가 떠요</div>
+      </div>
+      <img src="img/hero.png?v=2" alt="가늠표 한 장을 돋보기로 살펴보는 굿균 — 묻고, 가늠하고, 근거를 연다">
+    </div>
+    <div class="gate">
+      <h3>시작하기 전에 꼭 읽어 주세요</h3>
+      <p style="margin:.2rem 0">이 도구가 보여 주는 <b>모든 내용은 참고용</b>입니다.</p>
+      <ul>
+        <li>국민기초생활보장 <b>수급 여부와 급여액은 오직 시·군·구(읍·면·동) 담당자가 조사하여 결정</b>합니다.</li>
+        <li>여기의 결과는 <b>입력한 내용만으로 계산한 '대략'</b>이며, 실제 조사에서는 소득·재산·가구 정보가 다르게 확인될 수 있습니다.</li>
+        <li>이 결과로 신청·포기·이의 여부를 <b>결정하지 마세요.</b> 반드시 주소지 행정복지센터나 보건복지상담센터 <b>129</b>에 확인하세요.</li>
+        <li>기준: 2026년 국민기초생활보장 사업안내(2026.1.1. 발행)·고시 제2025-135호.</li>
+      </ul>
+      <div class="btns"><button id="agree">확인했습니다 · 시작하기</button></div>
+    </div>
+  </section>
+
+  <!-- 갈래 고르기 -->
+  <section id="v-mode" class="view">
+    <h2>어떻게 시작할까요?</h2>
+    <div class="row">
+      <div class="card pick" data-go="free">
+        <img src="img/전신_생각중.png" alt="">
+        <div><h3>내 상황을 글로 쓸게요</h3><p class="muted" style="margin:0">"서울 강남에 월세 60만원으로 살고 아이가 2명, 월급 80만원에 국민연금 20만원 받아요" 처럼 편하게. 읽어 드리고 빠진 것만 여쭤 봐요.</p></div>
+      </div>
+      <div class="card pick" data-go="interview">
+        <img src="img/듣기.png" alt="">
+        <div><h3>질문에 답할게요</h3><p class="muted" style="margin:0">막막하면 이쪽. 한 화면에 질문 하나씩, 꼭 필요한 것만. 질문 아래에 어려운 말 풀이가 같이 나와요. 모르면 '모름'.</p></div>
+      </div>
+      <div class="card pick" data-go="cases">
+        <img src="img/전신_궁금.png" alt="">
+        <div><h3>가상 사례로 연습할게요</h3><p class="muted" style="margin:0">실무자 훈련용. 가상의 상담일지 다섯 건을 읽고 직접 입력해 보거나, 정답 가늠표를 바로 봐요. 인물·숫자는 전부 가상.</p></div>
+      </div>
+    </div>
+    <div class="tip">💡 <b>점선 밑줄</b>이 있는 말에 <b>마우스를 올리면</b>(폰은 톡 누르면) 쉬운 풀이가 떠요. 한번 해 보세요 → <span class="term" data-term="소득인정액">소득인정액</span></div>
+  </section>
+
+  <!-- 기준표 -->
+  <section id="v-table" class="view">
+    <h2>2026년 기준표 — 가구원 수별 기준 중위소득과 급여별 선정기준</h2>
+    <p class="muted">이 표 하나면 "우리 집 몇 인 가구, 선은 얼마"가 바로 보여요. 아래 버튼으로 그림(PNG)으로 저장해 교육 자료나 상담 자리에 쓰세요. 숫자는 고시 제2025-135호 그대로예요.</p>
+    <div id="ktable"></div>
+  </section>
+
+  <!-- 갈래 A: 자유 글 -->
+  <section id="v-free" class="view">
+    <h2>내 상황을 글로 써 주세요</h2>
+    <div class="card">
+      <textarea id="free-text" placeholder="예) 나는 55살이고 부산에서 혼자 살아. 월세 보증금 500만원에 월세 35만원. 자활근로로 120만원 받고 통장에 300만원쯤 있어. 차는 없고 대출 200만원."></textarea>
+      <div class="btns"><button id="free-read">읽어 보기</button><button class="ghost" data-go="mode">뒤로</button></div>
+    </div>
+    <div id="free-card"></div>
+  </section>
+
+  <!-- 갈래 B: 질문 -->
+  <section id="v-interview" class="view">
+    <div class="progress"><i id="prog" style="width:0%"></i></div>
+    <div class="iv-grid">
+      <div id="iv" class="card"></div>
+      <aside class="gg-side"><div class="bubble" id="gg-say">하나씩 천천히요. 모르면 '모름'이에요.</div><img id="gg-img" src="img/듣기.png" alt="굿균"></aside>
+    </div>
+  </section>
+
+  <!-- 가늠표 -->
+  <section id="v-result" class="view">
+    <div id="sheet"></div>
+    <div class="btns noprint">
+      <button id="to-change">무엇이 바뀌면? 움직여 보기 →</button>
+      <button class="ghost" id="print">인쇄 · PDF로 저장</button>
+      <button class="ghost" id="edit-back">입력 고치기</button>
+      <button class="ghost" id="restart">처음부터</button>
+    </div>
+  </section>
+
+  <!-- 가상 사례 -->
+  <section id="v-cases" class="view"><div id="cases"></div></section>
+
+  <!-- 자활 탭 -->
+  <section id="v-jahwal" class="view"><div id="jahwal"></div></section>
+
+  <!-- 변화 보기 -->
+  <section id="v-change" class="view"><div id="change"></div></section>
+
+  <!-- 근거 찾기 -->
+  <section id="v-search" class="view">
+    <h2>근거 찾기</h2>
+    <div class="notice soft">여기서는 <b>답을 만들지 않아요.</b> 현장 말로 치면 2026년 사업안내·자활사업안내에서 <b>관련 쪽수와 제목</b>을 찾아 드려요. 원문은 그 쪽을 직접 열어 확인하세요. 적용 여부는 담당자가 판단해요.</div>
+    <div class="card">
+      <input type="text" id="sq" placeholder="예) 군대 간 아들, 용돈, 차, 통장, 자활근로 공제, 부양의무자, 이의신청">
+      <div class="btns"><button id="sgo">찾기</button></div>
+      <div class="chips small" id="sq-examples" style="margin-top:10px"></div>
+    </div>
+    <div id="sres"></div>
+  </section>
+
+  <!-- 쉬운 말 -->
+  <section id="v-terms" class="view">
+    <h2>정말 쉬운 용어 사전</h2>
+    <p class="muted">국기초에서 나오는 말을 초등학생도 알아듣게 풀었어요. 정확한 정의는 사업안내 원문이 기준이고, 이건 '먼저 감 잡기'용이에요.</p>
+    <div class="card"><input type="text" id="tq" placeholder="찾을 말 (예: 소득인정액, 부양의무자, 기본재산액)"><div class="btns"><button class="ghost" id="t-print">🖨️ A4로 인쇄 (용어 카드)</button></div></div>
+    <div id="tlist"></div>
+  </section>
+
+  <!-- 안내 -->
+  <section id="v-about" class="view">
+    <h2>이 도구는</h2>
+    <div class="card">
+      <p>지역자활센터 실무자와 자활 참여자가 <b>국민기초생활보장 제도를 내 상황으로 가늠해 보고, 근거가 되는 쪽을 바로 찾아보게</b> 하려고 만든 참고용 도구예요. 상담하듯 몇 가지를 묻고, 한 장짜리 가늠표를 보여 주고, 소득이나 가구원이 바뀌면 어떻게 달라지는지 그 자리에서 움직여 봐요.</p>
+      <ul>
+        <li><b>답을 지어내지 않아요.</b> 계산은 사업안내의 산식과 그해 고시 숫자로만 하고, 모든 숫자 옆에 쪽수를 달아요. 근거 찾기는 쪽수와 제목만 알려 주고 원문은 직접 열게 해요(사업안내는 무단전재·무단인용 금지 표기가 있어 본문을 싣지 않아요).</li>
+        <li><b>저장하지 않아요.</b> 서버가 없고 계산은 이 브라우저 안에서만 돼요. 이름·주민번호·연락처 칸이 없어요.</li>
+        <li><b>확정은 담당자가 해요.</b> 시작 전, 결과지 머리와 꼬리, 인쇄물에 같은 말을 반복해 둔 이유예요.</li>
+        <li><b>자활 탭과 가상 사례.</b> 「자활」 탭은 사업안내 가운데 자활센터가 매일 만나는 부분(참여 자격·자활근로 유형·소득공제·특례·자산형성)만 떼어 모은 것이고, 「가상 사례」는 실무자 훈련용 상담일지 5건이에요(인물·숫자 전부 가상).</li>
+        <li><b>매년 바뀌어요.</b> 7월 말 중앙생활보장위원회 → 8월 초 고시 → 다음 해 1월 1일 사업안내. 숫자 파일만 갈아 끼워요. 지금은 2026년 판이에요.</li>
+      </ul>
+      <p class="muted">원문: 보건복지부 고시 제2025-135호 「2026년 기준 중위소득 및 생계·의료급여 선정기준과 최저보장수준」 · 『2026년 국민기초생활보장 사업안내』(2026.1.1.) · 『2026년 자활사업안내』 · 복지부 보도자료 2025-07-31, 2026-01-01.</p>
+      <p class="muted">굿균은 화면 안에서만 사는 '화면 속 안내자'예요. 화면 밖의 판단은 언제나 사람 몫이고요.</p>
+    </div>
+  </section>
+</main>
+
+<div id="pop" class="pop" hidden></div>
+<div id="modal" hidden></div>
+
+<footer>
+  <div class="maker">
+    <img src="img/feedback_t.png" alt="">
+    <div>
+      <h3>만든 사람 · 자활전문강사 김태균</h3>
+      <p>서울강남지역자활센터 실무자이자 자활전문강사입니다. 현장에서 쌓은 경험이 우리 센터만이 아니라 <b>모든 지역자활센터와 사회복지기관에 조금이나마 도움이 되길 바라며</b>, AI 동료와 함께 이 도구를 만들어 나눕니다. 쓰다가 틀린 숫자, 이상한 계산, 더 있었으면 하는 것이 보이면 꼭 알려 주세요. 그것이 이 도구가 좋아지는 유일한 길입니다.</p>
+      <div class="mini">국기초 가늠표 v0.4 · 참고용 · 확정은 시·군·구 담당자 · 보건복지상담센터 129</div>
+    </div>
+    <button class="mint" id="fb-open">💌 의견 보내기</button>
+  </div>
+</footer>
+<script type="module" src="js/app.js?v=15"></script>
+</body>
+</html>
