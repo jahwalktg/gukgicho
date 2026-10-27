@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자산형성 길잡이</title>
+<meta name="description" content="희망저축계좌Ⅰ·Ⅱ·청년내일저축계좌 — 가입 자격 가늠, 통장 비교, 가입 뒤 유지·만기 안내, 담당자 상담·사례. 참고용, 확정은 읍·면·동과 시·군·구 담당자가 합니다.">
+<link rel="stylesheet" href="../css/style.css?v=17">
+<link rel="stylesheet" href="asset.css?v=2">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <img src="../img/전신_미소.png" alt="굿균">
+      <div><h1>자산형성 길잡이</h1><div class="tag">희망저축계좌Ⅰ·Ⅱ · 청년내일저축계좌 · <span class="badge">참고용</span></div></div>
+    </div>
+    <nav class="tabs">
+      <button data-go="judge" class="on">가입 자격</button>
+      <button data-go="compare">통장 비교·고르기</button>
+      <button data-go="keep">가입 뒤 유지·만기</button>
+      <button data-go="counsel">상담·사례</button>
+      <button data-go="terms">쉬운 말</button>
+      <button data-go="about">안내</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="handoff"></div>
+
+  <!-- ① 가입 자격 가늠 -->
+  <section id="v-judge" class="view on">
+    <div class="intro card soft">
+      <p><b>수급 가구에게 가장 큰 혜택이 될 수 있는 통장</b>이에요. 매달 10만원을 모으면 나라가 매달 10~30만원을 더 얹어 주고, 자활근로 사업단에서 일하면 내일키움장려금(월 20만원)과 수익금이 더 붙어요. 우리 집이 어느 통장에 들어갈 수 있는지 먼저 가늠해 봐요.</p>
+      <p class="small muted">숫자는 『2026년 자활사업안내(Ⅱ) 자산형성지원 통장사업 안내』 기준이에요. 이름·주민번호 칸은 없고, 넣은 숫자는 저장하지 않아요. <b>확정은 읍·면·동과 시·군·구 담당자</b>가 소득·재산 조사로 해요.</p>
+    </div>
+    <div class="tipbox"></div>
+    <div class="card" id="form"></div>
+    <div id="judgeOut"></div>
+    <div class="sec"><div class="ico">📏</div><h3>40%·50%·60%가 무슨 말인가요 — 소득 띠로 보기</h3></div>
+    <div class="card" id="band"></div>
+    <div class="sec"><div class="ico">📋</div><h3>가구원 수별 가입·유지 기준표 (2026, 월)</h3></div>
+    <div class="card" id="ltable"></div>
+  </section>
+
+  <!-- ② 통장 비교·고르기 -->
+  <section id="v-compare" class="view">
+    <div class="tipbox"></div>
+    <div class="sec"><div class="ico">🧭</div><h3>세 통장 한눈에</h3></div>
+    <div class="card" id="cmpTable"></div>
+    <div class="sec"><div class="ico">🧮</div><h3>3년 모으면 얼마쯤 — 우리 경우로 어림</h3></div>
+    <div class="card" id="calc"></div>
+    <div class="sec"><div class="ico">🤔</div><h3>고를 때 생각할 것</h3></div>
+    <div class="card" id="choose"></div>
+  </section>
+
+  <!-- ③ 가입 뒤 유지·만기 -->
+  <section id="v-keep" class="view"><div class="tipbox"></div><div id="keep"></div></section>
+
+  <!-- ④ 상담·사례 -->
+  <section id="v-counsel" class="view"><div class="tipbox"></div><div id="counsel"></div></section>
+
+  <!-- 쉬운 말 -->
+  <section id="v-terms" class="view">
+    <h2>자산형성에 나오는 말, 쉽게</h2>
+    <div class="card"><p class="small muted">통장 안내에는 어려운 말이 많아요. 초등학생도 알 수 있게 풀었어요. 화면 곳곳의 <span class="term no-pop">점선 밑줄</span> 말을 누르면 같은 풀이가 떠요.</p>
+      <input type="text" id="tq" placeholder="찾을 말 (예: 탈수급, 만기, 환수, 적립중지, 내일키움)">
+      <div class="btns"><button class="ghost" onclick="window.print()">🖨️ 이 목록 A4로 인쇄</button></div></div>
+    <div id="tlist"></div>
+  </section>
+
+  <!-- ⑤ 안내 -->
+  <section id="v-about" class="view">
+    <h2>이 도구는</h2>
+    <div class="card">
+      <p>국기초 가늠표의 한 갈래로, <b>자산형성지원 통장</b>(희망저축계좌Ⅰ·Ⅱ, 청년내일저축계좌)만 따로 모은 참고용 도구예요. 세 가지 쓰임을 생각하고 만들었어요.</p>
+      <ul>
+        <li><b>가입을 고민하는 수급 가구</b> — 우리 집이 들어갈 수 있는 통장, 3년 뒤 모이는 돈, 받으려면 지킬 조건.</li>
+        <li><b>이미 가입한 분</b> — 만기·유예 끝 날짜, 매달·해마다 지킬 것, 통장이 깨지는 경우와 받는 돈의 차이.</li>
+        <li><b>자산형성 담당자</b> — 상담 순서 확인 목록, 가상 사례 연습, 상담 결과 한 장 인쇄.</li>
+      </ul>
+      <ul>
+        <li><b>쉬운 말로 써요.</b> 초등학생이 읽어도 알 수 있게 쓰고, 어려운 말에는 점선 밑줄을 그어 누르면 풀이가 뜨게 했어요(「쉬운 말」 탭에 모아 두었어요).</li>
+        <li><b>저장하지 않아요.</b> 서버가 없고, 계산은 이 브라우저 안에서만 돼요. 국기초 가늠표에서 넘어올 때도 숫자만 주소 뒤(#)에 실어 오고, 그 부분은 인터넷으로 보내지지 않아요.</li>
+        <li><b>확정은 담당자가 해요.</b> 가입은 공적 자료로 소득·재산을 조사해 시·군·구가 결정해요. 지급 요건(탈수급·교육·자금사용계획서)도 담당자가 확인해요.</li>
+        <li><b>탈수급장려금 금액</b>은 가입 연도마다 달라 지침에 숫자가 없어요. 이 도구도 금액을 넣지 않았어요.</li>
+        <li><b>이자</b>는 통장 약관의 약정이율을 따르므로 어림에 넣지 않았어요.</li>
+      </ul>
+      <p class="muted">원문: 『2026년 자활사업안내(Ⅱ) 자산형성지원 통장사업 안내』(보건복지부·한국자활복지개발원) · 보건복지부 고시 제2025-135호(2026년 기준 중위소득). 쪽수는 책에 인쇄된 쪽이에요. 개편 전 통장(희망키움통장Ⅰ·Ⅱ, 내일키움통장, 청년희망키움통장, 청년저축계좌)은 새로 가입하지 않아 여기서 다루지 않아요.</p>
+      <p><a href="../">← 국기초 가늠표로</a></p>
+    </div>
+  </section>
+</main>
+
+<div id="pop" class="pop" hidden></div>
+
+<footer>
+  <div class="maker">
+    <img src="../img/feedback_t.png" alt="">
+    <div>
+      <h3>만든 사람 · 자활전문강사 김태균</h3>
+      <p>자산형성 통장은 수급 가구에게, 특히 자활센터에서 일하며 통장을 모으는 분들에게 가장 특별한 혜택이에요. 제대로 알고 끝까지 받을 수 있게 돕고 싶어 만들었습니다. 틀린 숫자나 더 있었으면 하는 것이 보이면 알려 주세요.</p>
+      <div class="mini">자산형성 길잡이 (국기초 가늠표 v0.6) · 참고용 · 확정은 읍·면·동·시·군·구 담당자 · 보건복지상담센터 129 · <a href="../">국기초 가늠표</a></div>
+    </div>
+    <a class="mint fbbtn" href="mailto:jahwalktg@gmail.com?subject=%EC%9E%90%EC%82%B0%ED%98%95%EC%84%B1%20%EA%B8%B8%EC%9E%A1%EC%9D%B4%20%EC%9D%98%EA%B2%AC">💌 의견 보내기</a>
+  </div>
+</footer>
+<script type="module" src="asset.js?v=2"></script>
+</body>
+</html>

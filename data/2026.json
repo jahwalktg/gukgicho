@@ -410,5 +410,122 @@
       "pharmacy": 500
     },
     "_note": "연 365회 초과 외래는 본인부담 30%(취약계층 예외). 1종·2종 구분은 근로능력 등으로 담당자가 정함"
+  },
+  "asset": {
+    "_source": "『2026년 자활사업안내(Ⅱ) 자산형성지원 통장사업 안내』(보건복지부·한국자활복지개발원, v6.1) — 쪽수는 책에 인쇄된 쪽. 기준 중위소득은 위 median_income 과 같음(p.35·49·62 표로 확인)",
+    "doc_title": "2026년 자활사업안내(Ⅱ) 자산형성지원 통장사업 안내",
+    "self_monthly": [
+      100000,
+      500000
+    ],
+    "income_floor": 100000,
+    "cap_ratio": 1.0,
+    "cap_min_household": 3,
+    "months": 36,
+    "accounts": {
+      "hope1": {
+        "name": "희망저축계좌Ⅰ",
+        "who": "일하는 생계·의료급여 수급 가구",
+        "recognized_max_ratio": 0.4,
+        "earned_min_ratio_of_40": 0.6,
+        "match_monthly": 300000,
+        "extras": [
+          "tal",
+          "naeil",
+          "suik"
+        ],
+        "grace_months": 6,
+        "condition": "3년 만기 뒤 6개월(유예기간) 안에 생계·의료급여에서 모두 벗어나기(탈수급)",
+        "refs": {
+          "join": 35,
+          "keep": 36,
+          "pay": "43~45",
+          "table": 3
+        }
+      },
+      "hope2": {
+        "name": "희망저축계좌Ⅱ",
+        "who": "일하는 주거·교육급여 수급 가구와 차상위 가구",
+        "recognized_max_ratio": 0.5,
+        "match_by_year": [
+          100000,
+          200000,
+          300000
+        ],
+        "match_before_2025": 100000,
+        "extras": [
+          "naeil",
+          "suik"
+        ],
+        "condition": "3년간 근로활동 지속 + 자립역량교육 10시간 + 자금사용계획서",
+        "refs": {
+          "join": 48,
+          "keep": 49,
+          "pay": "55~57",
+          "table": 3
+        }
+      },
+      "youth": {
+        "name": "청년내일저축계좌",
+        "who": "일하는 수급·차상위(기준 중위소득 50% 이하) 가구의 만 15~39세 청년",
+        "recognized_max_ratio": 0.5,
+        "age": [
+          15,
+          39
+        ],
+        "own_earned_min": 100000,
+        "match_monthly": 300000,
+        "extras": [
+          "gongje",
+          "tal",
+          "naeil",
+          "suik"
+        ],
+        "condition": "3년간 근로활동 지속 + 자립역량교육 10시간 + 자금사용계획서",
+        "note_2026": "2026년부터 기준 중위소득 50% 초과~100% 가구 청년 신규 모집 중단(기존 가입자는 월 10만원 지원 유지)",
+        "refs": {
+          "join": 61,
+          "keep": 62,
+          "pay": "73~74",
+          "table": 3
+        }
+      }
+    },
+    "extras": {
+      "gongje": {
+        "name": "근로소득공제금",
+        "monthly": 100000,
+        "who": "청년내일저축계좌 가입 당시 생계급여 수급 가구의 청년, 본인 근로·사업소득 10만원 초과",
+        "ref": 22
+      },
+      "tal": {
+        "name": "탈수급장려금",
+        "monthly": null,
+        "who": "가입 당시 생계·의료 수급 가구가 해지 때 생계·의료에서 모두 벗어나면(금액은 가입 연도마다 다름)",
+        "ref": 24
+      },
+      "naeil": {
+        "name": "내일키움장려금",
+        "monthly": 200000,
+        "who": "자활근로사업단(시장진입형·시간제·청년자립도전·사회서비스형)에 전월 12일 이상 실근무 + 당월 10만원 이상 저축",
+        "excluded": "Gateway 과정·인턴·도우미형·근로유지형은 제외",
+        "ref": 24
+      },
+      "suik": {
+        "name": "내일키움수익금",
+        "monthly_max": 150000,
+        "who": "내일키움장려금과 같은 조건, 사업단 매출 정산에 따라 월 15만원 이내",
+        "ref": "24~25"
+      }
+    },
+    "rules": {
+      "saving_window": "전월 23일 ~ 당월 22일(휴일이면 다음 영업일)이 한 달 몫, 자동이체는 1~20일 원칙 [p.18]",
+      "stop_general_months": 12,
+      "stop_general_ref": 15,
+      "stop_youth_special_years": 2,
+      "unpaid_months_refund": 12,
+      "floor_fail_months": 6
+    },
+    "recruit": "희망저축계좌Ⅰ 2026년 신규 모집은 2월·7월·10월 차수(변동 가능), 차수마다 일정이 정해져 있어 지자체 공고를 확인 [p.140~141]"
   }
 }

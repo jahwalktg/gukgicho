@@ -183,11 +183,13 @@ export function compute(input, D) {
     hasJahwal,
     special: hasJahwal && recognizedMed > T.uiryo ? "자활근로 소득으로 의료급여 선정기준을 넘었다면 자활급여특례(5년) 검토 대상입니다. [안내 p.56~58]" : null,
     hope1: working && (benefits.saenggye.eligible || benefits.uiryo.eligible) && earnedTotal >= median * 0.4 * 0.6,
-    hope1Why: `희망저축계좌Ⅰ: 생계·의료 수급 가구 + 근로·사업소득 ≥ 기준 중위소득 40%의 60%(${fmtMan(median * 0.4 * 0.6)}) [안내 p.249] — 확인 필요: 공제 전 금액으로 가늠, 자활근로 포함 여부는 담당자 확인`,
+    hope1Why: `희망저축계좌Ⅰ: 생계·의료 수급 가구 + 가구 근로·사업소득(공제 전, 자활근로 포함) ≥ 기준 중위소득 40%의 60%(${fmtMan(median * 0.4 * 0.6)}) [자산형성 안내 p.35]`,
     hope2: working && !(benefits.saenggye.eligible || benefits.uiryo.eligible) && recognized <= median * 0.5,
-    hope2Why: `희망저축계좌Ⅱ: 주거·교육 수급 또는 차상위 + 소득인정액 ≤ 기준 중위소득 50%(${fmtMan(median * 0.5)}) [안내 p.249]`,
-    youth: members.some((m) => m.age != null && m.age >= J.youth_tomorrow_savings.age[0] && m.age <= J.youth_tomorrow_savings.age[1]) && recognized <= median * 0.5,
-    youthWhy: "청년내일저축계좌: 만 15~39세 + 소득인정액 ≤ 기준 중위소득 50% (2026)",
+    hope2Why: `희망저축계좌Ⅱ: 주거·교육 수급 또는 차상위 + 소득인정액 ≤ 기준 중위소득 50%(${fmtMan(median * 0.5)}) [자산형성 안내 p.48]`,
+    // 청년내일저축계좌: 만 15~39세 + 청년 본인 근로·사업소득 월 10만원 이상(세전) + 가구 소득인정액 ≤ 중위 50% [자산형성 안내 p.61~62]
+    youth: members.some((m) => m.age != null && m.age >= J.youth_tomorrow_savings.age[0] && m.age <= J.youth_tomorrow_savings.age[1]
+      && won(m.earned && m.earned.amount) + won(m.earned2 && m.earned2.amount) >= 100000) && recognized <= median * 0.5,
+    youthWhy: "청년내일저축계좌: 만 15~39세 일하는 청년(본인 근로·사업소득 월 10만원 이상) + 가구 소득인정액 ≤ 기준 중위소득 50% [자산형성 안내 p.61]",
   };
 
   const unknown = input.unknown || [];

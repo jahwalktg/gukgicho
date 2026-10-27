@@ -1,8 +1,8 @@
-import { compute, withExtraIncome, fmtMan, fmtWon, REGIONS, medianIncome, thresholds } from "./engine.js?v=7";
+import { compute, withExtraIncome, fmtMan, fmtWon, REGIONS, medianIncome, thresholds } from "./engine.js?v=8";
 import { parseFreeText } from "./parse.js?v=6";
 import { loadSearch, search, pageRef, SOURCES } from "./search.js?v=6";
 
-const VERSION = "v0.5";
+const VERSION = "v0.6";
 const CONTACT = { mail: "jahwalktg@gmail.com" };   // 2026-10-26 전화번호는 뺌(메일만)
 // 의견 설문(구글 설문 「국기초 가늠표 — 의견 보내기」, jahwalktg 계정, 2026-10-26). 미리 채우기: 종류·내용·쓰던 화면
 const FB_FORM = { url: "https://docs.google.com/forms/d/e/1FAIpQLSe3RkitFOW0kYWmdlF8xSf4tufd_9ZS-uC0OaRBpyVcdclE_w/viewform", type: "entry.390376584", text: "entry.1630338836", ctx: "entry.531365058" };
@@ -357,9 +357,23 @@ function kpiHTML(r) {
 }
 
 // ---------- 가늠표 ----------
+// ---------- 자산형성 길잡이로 넘겨주기 (v0.6) — 숫자만 주소 뒤 #에 실어 새 창으로. #뒤는 서버로 가지 않고, 길잡이가 읽은 뒤 주소에서 지운다 ----------
+function assetHref(r, i) {
+  if (!r) return "asset/";
+  const B = r.benefits, b = (B.saenggye.eligible ? "s" : "") + (B.uiryo.eligible ? "u" : "") + (B.jugeo.eligible ? "j" : "") + (B.gyoyuk.eligible ? "g" : "");
+  const c = !b && r.recognized <= r.median * 0.5 ? "c" : "";
+  const ys = (i.members || []).filter((m) => m.age != null && m.age >= 15 && m.age <= 39)
+    .map((m) => `${m.age}:${Math.round((+(m.earned && m.earned.amount) || 0) + (+(m.earned2 && m.earned2.amount) || 0))}`);
+  const q = new URLSearchParams({ from: "gauge", n: r.n, r: Math.round(r.recognized), e: Math.round(r.income.earned), b: b + c, j: r.jahwal.hasJahwal ? "ok" : "none" });
+  if (r.jahwal.special) q.set("sp", "1");
+  if (ys.length) q.set("y", ys.join(","));
+  return "asset/#" + q.toString();
+}
+const assetGet = () => `<b>자산형성 통장</b> — 일하는 수급·차상위 가구가 매달 10만원을 모으면 나라가 10~30만원을 더 얹어 주는 통장(희망저축계좌Ⅰ·Ⅱ, 청년내일저축계좌). <a class="ref-like" href="${assetHref(state.last, state.input)}" target="_blank" rel="noopener">💰 자산형성 길잡이로 — 가입 자격·3년 모이는 돈·지킬 것 (새 창) →</a>`;
 function renderResult() {
   const i = state.input, D = state.D;
   const r = compute(i, D); state.last = r;
+  const na = $("#nav-asset"); if (na) na.href = assetHref(r, i);   // 위 「자산형성 ↗」도 우리 집 숫자를 들고 가게
   const today = new Date().toLocaleDateString("ko-KR");
   const members = i.members.map((m) => `${m.age ?? "?"}세${m.earned && m.earned.amount ? (m.earned.type === "jahwal" ? " 자활" : " 일함") : ""}`).join(" · ");
   const anyOk = ["saenggye", "jugeo", "gyoyuk"].some((k) => r.benefits[k].eligible);
@@ -373,6 +387,7 @@ function renderResult() {
   if (r.jahwal.hope1) G("info", "💰", r.jahwal.hope1Why);
   if (r.jahwal.hope2) G("info", "💰", r.jahwal.hope2Why);
   if (r.jahwal.youth) G("info", "💰", r.jahwal.youthWhy);
+  if (r.income.earned > 0 && r.recognized <= r.median * 0.5) G("info", "🏦", assetGet());
   G("info", "🧩", jahwalGetHTML(r));
   G("info", "📣", `수급자가 되면 <b>꼭 신고</b>: 이사 · 같이 사는 가족 변동 · 취업·아르바이트 등 소득 발생(자활근로 포함) · 전월세 조건 변경 · 자동차 구입 등 재산 증가. 결정이 억울하면 통지받은 날부터 90일 안에 이의신청.`);
 
@@ -639,7 +654,7 @@ function renderJahwal() {
     let cell = `<td class="n muted">—</td><td class="muted small">가늠표를 먼저 만들면 우리 집에 적용해 보여요</td><td class="n muted">—</td>`;
     if (r) { const x = compute(withJahwalPay(state.input, t.monthly_standard), D); const s = x.benefits.saenggye, u = x.benefits.uiryo;
       const hand = x.income.actual + (s.eligible ? s.amount : 0);   // 손에 쥐는 합계 = 가구가 버는 돈(이 유형의 자활급여 포함)·받는 연금 등 + 생계급여 가늠 (2026-10-26 태균님: 생계 칸만 보면 근로유지형이 나아 보이는 오해를 막으려고)
-      cell = `<td class="n"><b>${fmtMan(x.recognized)}</b></td><td class="small">생계 ${s.eligible ? `○ 약 ${fmtMan(s.amount)}` : "×"} · 의료 ${u.eligible ? "△" : "×"}${x.jahwal.special ? " · 🛟 자활급여특례" : ""}${x.jahwal.hope1 ? " · 💰 희망저축Ⅰ(확인 필요)" : ""}</td><td class="n hand"><b>약 ${fmtMan(hand)}</b></td>`; }
+      cell = `<td class="n"><b>${fmtMan(x.recognized)}</b></td><td class="small">생계 ${s.eligible ? `○ 약 ${fmtMan(s.amount)}` : "×"} · 의료 ${u.eligible ? "△" : "×"}${x.jahwal.special ? " · 🛟 자활급여특례" : ""}${x.jahwal.hope1 ? " · 💰 희망저축Ⅰ" : ""}</td><td class="n hand"><b>약 ${fmtMan(hand)}</b></td>`; }
     return `<tr><td><b>${name}</b><div class="small muted">하루 ${t.hours}시간</div></td><td class="n">${fmtWon(t.daily)}</td><td class="n">${fmtWon(t.monthly_standard)}</td><td class="n">${fmtWon(after)}</td>${cell}</tr>`;
   }).join("");
   const fit = r ? jahwalFit(r) : null;
@@ -649,7 +664,7 @@ function renderJahwal() {
   <div class="sec"><div class="ico">🧩</div><h3>우리 집, 자활에서 보면</h3></div>
   ${fit ? `<div class="card fit"><div class="fit-type">${esc(fit.type)}</div><p>${esc(fit.why)}</p><div class="small">근거 ${refLink(fit.ref)}</div>
       <div class="gets">${r.jahwal.special ? `<div class="get cond"><div class="i">🛟</div><div>${esc(r.jahwal.special)}</div></div>` : ""}${r.jahwal.hope1 ? `<div class="get info"><div class="i">💰</div><div>${esc(r.jahwal.hope1Why)}</div></div>` : ""}${r.jahwal.hope2 ? `<div class="get info"><div class="i">💰</div><div>${esc(r.jahwal.hope2Why)}</div></div>` : ""}${r.jahwal.youth ? `<div class="get info"><div class="i">💰</div><div>${esc(r.jahwal.youthWhy)}</div></div>` : ""}</div>
-      <div class="btns"><button class="ghost" data-go="result">← 가늠표로</button><button class="ghost" data-go="change">🎛️ 자활소득이 늘면? (움직여 보기)</button></div></div>`
+      <div class="get info"><div class="i">🏦</div><div>${assetGet()}</div></div><div class="btns"><button class="ghost" data-go="result">← 가늠표로</button><button class="ghost" data-go="change">🎛️ 자활소득이 늘면? (움직여 보기)</button></div></div>`
     : `<div class="card soft"><p>아직 가늠표가 없어요. <b>가늠해 보기</b>에서 우리 집을 먼저 가늠하면, 여기에 참여 자격(조건부·일반·차상위)과 자활근로 유형별 가늠이 떠요.</p><div class="btns"><button data-go="gate">가늠해 보기</button><button class="ghost" data-go="cases">가상 사례로 연습</button></div></div>`}
   <div class="sec"><div class="ico">💼</div><h3>자활근로 유형별 가늠 — 참여하면 소득이 어떻게 잡히나</h3></div>
   <div class="card"><div class="tbl"><table class="rc jt"><tr><th>유형</th><th class="n">일당 (2026)</th><th class="n">월 표준소득액</th><th class="n">30% 공제 뒤</th><th class="n">${r ? "우리 집 소득인정액" : ""}</th><th>${r ? "네 칸 가늠" : ""}</th><th class="n">${r ? "손에 쥐는 합계" : ""}</th></tr>${typeRows}</table></div>
