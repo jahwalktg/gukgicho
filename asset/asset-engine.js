@@ -63,7 +63,7 @@ export function judge(f, D) {
   else if (E >= L.hope1Earned) h1.push({ ok: true, t: `가구 근로·사업소득 ${fmtWon(E)} ≥ 기준 중위소득 40%의 60% ${fmtWon(L.hope1Earned)}` });
   else h1.push({ ok: false, t: `가구 근로·사업소득 ${fmtWon(E)} < 기준 중위소득 40%의 60% ${fmtWon(L.hope1Earned)} (모자란 금액 ${fmtWon(L.hope1Earned - E)})` });
   if (E > 0 && !capOk) h1.push({ ok: false, t: `근로·사업소득이 소득상한 ${fmtWon(L.cap)}을 넘어요(통장 유지 기준).` });
-  h1n.push("근로·사업소득은 공제 전 금액(세전 총액)이고, 자활근로 소득도 근로소득으로 들어가요. 보장기관 확인소득은 빼요.");
+  h1n.push("근로·사업소득은 이것저것 빼기 전, 실제로 번 그대로의 금액(세전)으로 봐요. 자활근로로 받는 급여도 여기에 들어가요.");
 
   // ---------- 희망저축계좌Ⅱ ----------
   const h2 = [], h2n = [];

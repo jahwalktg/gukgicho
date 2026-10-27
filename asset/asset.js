@@ -1,5 +1,5 @@
 // 자산형성 길잡이 — 화면. 저장하지 않는다(서버·브라우저 저장 없음).
-import { judge, project, schedule, nextDeadline, lines, fmtWon, fmtMan, won } from "./asset-engine.js?v=2";
+import { judge, project, schedule, nextDeadline, lines, fmtWon, fmtMan, won } from "./asset-engine.js?v=3";
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -103,22 +103,22 @@ function renderForm() {
   const chip = (k, t) => `<button class="chip ${b[k] ? "on" : ""}" data-b="${k}">${t}</button>`;
   $("#form").innerHTML = `
   <div class="fgrid">
-    <label><span>가구원 수 <small>(국기초 보장 가구 기준)</small></span>
+    <label><span>가구원 수<small>국기초 보장 가구 기준</small></span>
       <select id="f-n">${[1, 2, 3, 4, 5, 6, 7, 8].map((x) => `<option value="${x}" ${f.n === x ? "selected" : ""}>${x}인${x === 8 ? " 이상" : ""}</option>`).join("")}</select></label>
-    <label><span>소득인정액 <small>(월, 만원 · 모르면 비워 두세요)</small></span>
+    <label><span>소득인정액<small>한 달, 만원 · 모르면 비워 두세요</small></span>
       <input type="number" id="f-r" min="0" step="0.1" inputmode="decimal" value="${f.recognized == null ? "" : f.recognized / MAN}" placeholder="예: 150"></label>
-    <label><span>가구 근로·사업소득 합계 <small>(월, 만원 · 공제 전 · 자활근로 포함)</small></span>
+    <label><span>가구 근로·사업소득 합계<small>한 달, 만원 · 공제 전 · 자활근로 포함</small></span>
       <input type="number" id="f-e" min="0" step="0.1" inputmode="decimal" value="${f.earned ? f.earned / MAN : ""}" placeholder="예: 161.4"></label>
   </div>
-  <div class="frow"><span class="lab">지금 받는 것 <small>(여러 개 고르기)</small></span><div class="chips" id="f-b">${chip("s", "생계급여")}${chip("u", "의료급여")}${chip("j", "주거급여")}${chip("g", "교육급여")}${chip("c", "차상위")}</div></div>
-  <div class="frow"><label class="chk"><input type="checkbox" id="f-sp" ${f.special ? "checked" : ""}> 가구원 중 <b>특례 수급자</b>가 있어요 <small class="muted">(자활급여특례·의료급여특례 등)</small></label></div>
+  <div class="frow"><span class="lab">지금 받는 것 <small>여러 개 고를 수 있어요</small></span><div class="chips" id="f-b">${chip("s", "생계급여")}${chip("u", "의료급여")}${chip("j", "주거급여")}${chip("g", "교육급여")}${chip("c", "차상위")}</div></div>
+  <div class="frow"><label class="chk"><input type="checkbox" id="f-sp" ${f.special ? "checked" : ""}><span>가구원 중 <b>특례 수급자</b>가 있어요 <small class="muted">(자활급여특례·의료급여특례 등)</small></span></label></div>
   <div class="frow"><span class="lab">자활근로 참여</span>
     <select id="f-j">
       <option value="none" ${f.jahwal === "none" ? "selected" : ""}>참여하지 않음</option>
       <option value="ok" ${f.jahwal === "ok" ? "selected" : ""}>사업단 참여 — 시장진입형·사회서비스형·시간제·청년자립도전</option>
       <option value="excluded" ${f.jahwal === "excluded" ? "selected" : ""}>Gateway·인턴·도우미형·근로유지형</option>
     </select></div>
-  <div class="frow"><span class="lab">만 15~39세 청년 가구원 <small>(청년내일저축계좌)</small></span>
+  <div class="frow"><span class="lab">만 15~39세 청년 가구원 <small>청년내일저축계좌 가늠용</small></span>
     <div id="f-y">${f.youths.map((y, i) => `<div class="yrow" data-i="${i}"><input type="number" class="y-a" min="0" max="99" value="${y.age ?? ""}" placeholder="나이"><span>세</span><input type="number" class="y-e" min="0" step="0.1" value="${y.earned ? y.earned / MAN : ""}" placeholder="본인 근로·사업소득"><span>만원</span><button class="ghost sm y-x" title="빼기">✕</button></div>`).join("")}</div>
     <button class="ghost sm" id="y-add">＋ 청년 넣기</button></div>
   <p class="small muted">소득인정액을 모르면 <a href="../">국기초 가늠표</a>로 먼저 가늠해 보세요. 가늠표 결과 화면의 「💰 자산형성 길잡이로」를 누르면 숫자가 여기로 그대로 넘어와요.</p>`;
@@ -157,7 +157,7 @@ function update() {
   const h1 = card("hope1", r.hope1, "희망저축계좌Ⅰ", A.accounts.hope1.who, P("35~36"), r.hope1.status !== "no" ? naeilTxt : "");
   const h2 = card("hope2", r.hope2, "희망저축계좌Ⅱ", A.accounts.hope2.who, P("48~49"), r.hope2.status !== "no" ? naeilTxt : "");
   const ys = r.youth.length
-    ? r.youth.map((y) => card("youth", y, `청년내일저축계좌 — 청년 ${y.i + 1}${y.age != null ? ` (만 ${y.age}세)` : ""}`, A.accounts.youth.who, P("61~62"), y.status !== "no" ? naeilTxt : "")).join("")
+    ? r.youth.map((y) => card("youth", y, "청년내일저축계좌", `<b class="who">청년 ${y.i + 1}${y.age != null ? ` · 만 ${y.age}세` : ""}</b> · ${A.accounts.youth.who}`, P("61~62"), y.status !== "no" ? naeilTxt : "")).join("")
     : `<div class="acard none"><div class="ahead"><div><b>청년내일저축계좌</b><div class="small muted">${A.accounts.youth.who}</div></div><span class="pill">청년 없음</span></div><p class="small">만 15~39세 가구원이 있으면 위 「＋ 청년 넣기」로 넣어 보세요. 희망저축계좌Ⅰ·Ⅱ 가구의 청년은 <b>함께 가입</b>할 수 있어요. ${P(3)}</p></div>`;
   const picks = [r.hope1.status !== "no" && "희망저축계좌Ⅰ", r.hope2.status !== "no" && "희망저축계좌Ⅱ", r.youth.some((y) => y.status !== "no") && "청년내일저축계좌"].filter(Boolean);
   $("#judgeOut").innerHTML = `
@@ -243,14 +243,14 @@ function renderCalc() {
   $("#calc").innerHTML = `
   <div class="chips" id="c-kind">${Object.entries(KIND).map(([key, t]) => `<button class="chip ${key === k ? "on" : ""}" data-k="${key}">${t}</button>`).join("")}</div>
   <div class="fgrid c3">
-    <label><span>매달 저축 <b>${c.self}만원</b></span><input type="range" id="c-self" min="10" max="50" step="5" value="${c.self}"></label>
-    <label><span>적립중지 <b>${c.stop}개월</b> <small>(3년 중 최대 12개월)</small></span><input type="range" id="c-stop" min="0" max="12" step="1" value="${c.stop}"></label>
-    <label class="${c.naeil ? "" : "dim"}"><span>내일키움수익금 <b>월 ${c.suik}만원</b> <small>(사업단 매출에 따라 0~15)</small></span><input type="range" id="c-suik" min="0" max="15" step="1" value="${c.suik}" ${c.naeil ? "" : "disabled"}></label>
+    <label><span>매달 저축 <b>${c.self}만원</b><small>10~50만원</small></span><input type="range" id="c-self" min="10" max="50" step="5" value="${c.self}"></label>
+    <label><span>적립중지 <b>${c.stop}개월</b><small>3년 중 최대 12개월</small></span><input type="range" id="c-stop" min="0" max="12" step="1" value="${c.stop}"></label>
+    <label class="${c.naeil ? "" : "dim"}"><span>내일키움수익금 <b>월 ${c.suik}만원</b><small>사업단 매출에 따라 0~15만원</small></span><input type="range" id="c-suik" min="0" max="15" step="1" value="${c.suik}" ${c.naeil ? "" : "disabled"}></label>
   </div>
   <div class="frow">
-    <label class="chk"><input type="checkbox" id="c-naeil" ${c.naeil ? "checked" : ""}> 자활근로 <b>사업단</b>에서 일해요 (내일키움장려금·수익금)</label>
-    ${k === "youth" ? `<label class="chk"><input type="checkbox" id="c-gongje" ${c.gongje ? "checked" : ""}> 가입 때 <b>생계급여</b> 수급 가구 청년 (근로소득공제금)</label>` : ""}
-    ${k === "hope2" ? `<label class="chk"><input type="checkbox" id="c-old" ${c.hope2Old ? "checked" : ""}> 2022~2024년에 가입했어요 (정부지원 월 10만원)</label>` : ""}
+    <label class="chk"><input type="checkbox" id="c-naeil" ${c.naeil ? "checked" : ""}><span>자활근로 <b>사업단</b>에서 일해요 (내일키움장려금·수익금)</span></label>
+    ${k === "youth" ? `<label class="chk"><input type="checkbox" id="c-gongje" ${c.gongje ? "checked" : ""}><span>가입 때 <b>생계급여</b> 수급 가구 청년 (근로소득공제금)</span></label>` : ""}
+    ${k === "hope2" ? `<label class="chk"><input type="checkbox" id="c-old" ${c.hope2Old ? "checked" : ""}><span>2022~2024년에 가입했어요 (정부지원 월 10만원)</span></label>` : ""}
   </div>
   <div class="proj">
     <div class="tbl"><table class="rc">${p.rows.map((r) => `<tr><td>${r.k}</td><td class="n">${fmtWon(r.v)}</td></tr>`).join("")}
@@ -331,9 +331,9 @@ function renderKeep() {
   <div class="intro card soft"><p><b>가입보다 어려운 건 3년을 지키는 것</b>이에요. 통장이 깨지는 이유 대부분은 "몰라서"예요. 내 통장을 고르면 지킬 것과 받는 돈이 그 통장 기준으로 바뀌어요.</p></div>
   <div class="card">
     <div class="chips" id="k-kind">${Object.entries(KIND).map(([key, t]) => `<button class="chip ${key === k.kind ? "on" : ""}" data-k="${key}">${t}</button>`).join("")}</div>
-    <div class="fgrid c3">
-      <label><span>첫 적립(가입) 연월</span><input type="month" id="k-ym" value="${k.ym}"></label>
-      ${k.kind === "youth" ? `<label class="chk mt"><input type="checkbox" id="k-sp" ${k.special ? "checked" : ""}> 특별 적립중지(2년) 신청 — 군입대·임신출산 퇴직·육아휴직</label>` : ""}
+    <div class="fgrid k2">
+      <label><span>첫 적립(가입) 연월<small>통장에 처음 저축한 달</small></span><input type="month" id="k-ym" value="${k.ym}"></label>
+      ${k.kind === "youth" ? `<label class="chk mt"><input type="checkbox" id="k-sp" ${k.special ? "checked" : ""}><span>특별 적립중지(2년) 신청 — 군입대·임신출산 퇴직·육아휴직</span></label>` : ""}
       <div class="dl"><span class="small muted">이번 저축 마감 (${dl.getMonth() + 1}월 몫)</span><b>${dl.getMonth() + 1}월 ${dl.getDate()}일</b><span class="small muted">(22일, 주말이면 다음 월요일 · 공휴일은 다음 영업일)</span></div>
     </div>
     ${when}
@@ -407,7 +407,7 @@ function renderCounsel() {
   $("#counsel").innerHTML = `
   <div class="intro card soft"><p>자산형성 담당자·자활센터 실무자용이에요. 상담 순서를 따라 확인하고, 가상 사례로 연습하고, 지금 넣은 내용으로 상담 결과 한 장을 뽑아 드릴 수 있어요. 사례의 인물·숫자는 모두 가상이에요.</p></div>
   <div class="sec"><div class="ico">✅</div><h3>상담 때 확인할 순서</h3></div>
-  <div class="card"><ol class="clist">${CHECK.map(([t, d, p]) => `<li><label class="chk"><input type="checkbox"> <b>${t}</b></label><div class="small">${d} ${P(p)}</div></li>`).join("")}</ol></div>
+  <div class="card"><ol class="clist">${CHECK.map(([t, d, p]) => `<li><label class="chk"><input type="checkbox"><span><b>${t}</b></span></label><div class="small">${d} ${P(p)}</div></li>`).join("")}</ol></div>
   <div class="sec"><div class="ico">🗂️</div><h3>가상 사례로 연습</h3></div>
   <div class="cases">${CASES.map((c) => `<div class="card case"><div class="cid">사례 ${c.id}</div><b>${c.t}</b>
     <div class="small muted">${c.f.n}인 · 소득인정액 ${fmtMan(c.f.recognized)} · 근로·사업소득 ${fmtMan(c.f.earned)}${c.f.youths.length ? ` · 청년 ${c.f.youths.map((y) => `${y.age}세 ${fmtMan(y.earned)}`).join(", ")}` : ""}</div>

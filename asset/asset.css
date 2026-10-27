@@ -3,33 +3,52 @@
 .fbbtn { display: inline-block; text-decoration: none; color: #fff; padding: .78rem 1.2rem; border-radius: 14px; font-weight: 600; white-space: nowrap; }
 button.sm { padding: .4rem .8rem; font-size: .86rem; border-radius: 10px; }
 
-.fgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.fgrid label > span { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 4px; }
-.fgrid small, .frow small { font-weight: 400; color: var(--muted); }
-.frow { margin-top: 14px; }
-.frow .lab { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
-.frow .chk { margin-right: 18px; }
-.chk { display: inline-flex; gap: 8px; align-items: center; font-size: .92rem; cursor: pointer; }
-.chk input { width: 18px; height: 18px; accent-color: var(--blue); }
-.chk.mt { margin-top: 26px; }
-.yrow { display: grid; grid-template-columns: 90px auto 1fr auto auto; gap: 8px; align-items: center; margin-bottom: 8px; max-width: 520px; }
+.fgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 18px; align-items: end; }
+.fgrid > label { display: flex; flex-direction: column; gap: 6px; }
+.fgrid > label > span { font-weight: 700; font-size: .95rem; line-height: 1.35; }
+.fgrid > label > span small { display: block; font-weight: 400; font-size: .8rem; color: var(--muted); margin-top: 2px; }
+.fgrid input[type=range] { margin: 2px 0 0; }
+input[type=month] { font: inherit; width: 100%; padding: .62rem .8rem; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; color: var(--text); }
+input[type=month]:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(26,110,255,.12); }
+.fgrid.k2 { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 16px; }
+.fgrid.k2 .chk.mt { grid-column: 1 / -1; padding: 0; }
+.intro > p:first-child { margin-top: 0; } .intro > p:last-child { margin-bottom: 0; }
+.intro { padding: 16px 20px; }
+.frow { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.frow .lab { display: block; font-weight: 700; font-size: .95rem; margin-bottom: 10px; }
+.frow small { font-weight: 400; font-size: .8rem; color: var(--muted); margin-left: 4px; }
+.frow .chk + .chk { margin-left: 22px; }
+.chk { display: inline-flex; gap: 10px; align-items: center; font-size: .94rem; line-height: 1.45; cursor: pointer; }
+.chk > span b { font-weight: 700; }
+.chk > span small { margin-left: 4px; }
+.chk input { flex: 0 0 auto; width: 19px; height: 19px; margin: 0; accent-color: var(--blue); }
+.chk.mt { align-self: end; padding-bottom: 12px; }
+#form > .small.muted { margin: 18px 0 0; padding-top: 14px; border-top: 1px dashed var(--line); }
+.yrow { display: grid; grid-template-columns: 96px auto minmax(0, 1fr) auto auto; gap: 8px; align-items: center; margin-bottom: 10px; max-width: 560px; }
+.yrow span { color: var(--muted); font-size: .9rem; }
+#y-add { margin-top: 2px; }
 .dim { opacity: .45; }
 
-.summary { background: var(--violetbg); border: 1.5px solid #DDD4FF; border-radius: 16px; padding: 14px 16px; margin: 8px 0 4px; }
+.summary { background: var(--violetbg); border: 1.5px solid #DDD4FF; border-radius: 16px; padding: 16px 18px; margin: 8px 0 4px; line-height: 1.6; }
+.summary .btns { margin-top: 12px; }
 .summary.none { background: var(--soft); border-color: var(--line); }
-.acards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
-.acard { background: #fff; border: 1.5px solid var(--line); border-radius: 18px; padding: 14px 16px; }
+.acards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px; align-items: start; }
+.acard { background: #fff; border: 1.5px solid var(--line); border-radius: 18px; padding: 16px 18px; }
+.acard > .small:last-child { margin-top: 10px; }
 .acard.ok { border-color: #BFE6CF; background: var(--okbg); }
 .acard.cond { border-color: #F3D8A2; background: var(--warnbg); }
 .acard.none { background: var(--soft); border-style: dashed; }
-.ahead { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.ahead { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; padding-bottom: 8px; border-bottom: 1px solid rgba(21,34,63,.08); }
+.ahead > div > b { font-size: 1.05rem; }
+.ahead .small { margin-top: 3px; line-height: 1.45; } .ahead b.who { color: var(--navy); font-size: .86rem; }
 .pill { white-space: nowrap; font-size: .8rem; font-weight: 700; padding: .22rem .65rem; border-radius: 999px; background: var(--soft); color: var(--navy); }
 .pill.ok { background: #1F9D5C; color: #fff; } .pill.cond { background: #E8A21B; color: #fff; } .pill.no { background: #8C96A8; color: #fff; }
 .checks { list-style: none; padding: 0; margin: 10px 0 6px; }
-.checks li { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; padding: 4px 0; }
-.mk { flex: 0 0 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .8rem; font-weight: 700; color: #fff; }
+.checks li { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; line-height: 1.5; padding: 5px 0; }
+.checks li + li { border-top: 1px dotted var(--line); }
+.mk { flex: 0 0 22px; height: 22px; margin-top: 1px; border-radius: 50%; display: grid; place-items: center; font-size: .8rem; font-weight: 700; color: #fff; }
 .mk.y { background: #1F9D5C; } .mk.n { background: #D9534F; } .mk.q { background: #E8A21B; }
-.note { margin: 6px 0; } .plus { margin: 8px 0; background: #fff; border: 1px dashed #BFE6CF; border-radius: 10px; padding: 6px 10px; }
+.note { margin: 8px 0; line-height: 1.55; } .plus { margin: 10px 0; line-height: 1.55; background: #fff; border: 1px dashed #BFE6CF; border-radius: 10px; padding: 6px 10px; }
 
 /* 소득 띠: 위 칸 = 24%·40%, 아래 칸 = 32%·50%, 맨 아래 = 우리 집 */
 .aband { position: relative; margin: 18px 4px 8px; padding: 66px 0 0; }
@@ -68,25 +87,31 @@ table.cmp td.c { text-align: center; }
 .rbar i { display: block; height: 100%; background: var(--blue); }
 .rbar.prog { background: #E3E9F3; } .rbar.prog i { background: #1F9D5C; }
 .sec.sm h4 { margin: 16px 0 6px; }
-ul.tips { margin: 0; padding-left: 1.1rem; } ul.tips li { margin: 6px 0; line-height: 1.6; }
+ul.tips { margin: 0; padding-left: 1.2rem; } ul.tips li { margin: 0; padding: 8px 0; line-height: 1.65; } ul.tips li + li { border-top: 1px dotted var(--line); }
 
 /* 유지·만기 */
-.when { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-.when > div, .dl { background: var(--soft); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.when { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.when > div, .dl { background: var(--soft); border-radius: 14px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; }
+.dl { align-self: end; }
 .when b, .dl b { font-size: 1.1rem; }
 .when .hl { background: #FFF4D6; }
 table.pay td:first-child { white-space: nowrap; }
 
 /* 상담 */
-ol.clist { margin: 0; padding-left: 1.3rem; } ol.clist li { margin: 8px 0; }
+ol.clist { margin: 0; padding-left: 1.4rem; } ol.clist li { padding: 10px 0; } ol.clist li + li { border-top: 1px dotted var(--line); } ol.clist li > .small { margin: 4px 0 0 29px; line-height: 1.55; }
 .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
 .case .cid { font-family: 'Jua', sans-serif; color: var(--blue); }
 .case details { margin-top: 6px; } .case summary { cursor: pointer; font-size: .88rem; color: var(--blue); }
 .sheetbox { display: none; }
 
 @media (max-width: 720px) {
-  .fgrid, .when { grid-template-columns: 1fr; }
-  .yrow { grid-template-columns: 70px auto 1fr auto auto; }
+  nav.tabs { margin-left: 0; width: 100%; flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 2px; scrollbar-width: none; }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs button { flex: 0 0 auto; padding: .45rem .8rem; }
+  .fgrid, .fgrid.k2, .when { grid-template-columns: 1fr; }
+  .yrow { grid-template-columns: 70px auto minmax(0, 1fr) auto auto; }
+  .frow .chk + .chk { margin-left: 0; margin-top: 10px; }
+  .frow .chk { display: flex; }
   .aband .tick, .aband .our { width: 44px; font-size: .7rem; }
   .aband .tick em, .aband .our em, .aband .tick b:not(.sh) { display: none; }
   .aband .tick b.sh { display: inline; }
