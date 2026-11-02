@@ -31,6 +31,13 @@ header.top .wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wra
 nav.tabs { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
 nav.tabs button { background: transparent; color: var(--navy); padding: .5rem .9rem; border-radius: 999px; box-shadow: none; font-weight: 600; }
 nav.tabs button.on { background: var(--navy); color: #fff; }
+/* 휴대폰: 결과지 계산 내역 표가 화면보다 넓으면 표만 옆으로 밀어 보기 (2026-11-02) */
+@media screen and (max-width: 720px) { .sheet details table.rc { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .sheet details table.rc td.n { white-space: nowrap; } }
+/* 글자 크게 (js/fontsize.js) */
+html.fs1, html.fs1 body { font-size: 18px; } html.fs2, html.fs2 body { font-size: 20px; }
+nav.tabs button.fsbtn { border: 1.5px solid var(--line); background: #fff; color: var(--navy); }
+nav.tabs button.fsbtn span { font-weight: 800; font-size: 1.05em; margin-right: 2px; }
+@media print { nav.tabs button.fsbtn { display: none; } }
 nav.tabs a.navlink { padding: .5rem .9rem; border-radius: 999px; font-weight: 700; color: #1F9D5C; text-decoration: none; border: 1.5px solid #BFE6CF; background: var(--okbg); }
 .badge { display: inline-block; font-size: .76rem; padding: .18rem .6rem; border-radius: 999px; background: #FFF1D6; color: #8A5A00; font-weight: 700; vertical-align: middle; }
 /* ===== 공통 ===== */

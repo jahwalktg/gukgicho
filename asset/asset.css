@@ -103,6 +103,10 @@ ol.clist { margin: 0; padding-left: 1.4rem; } ol.clist li { padding: 10px 0; } o
 .case .cid { font-family: 'Jua', sans-serif; color: var(--blue); }
 .case details { margin-top: 6px; } .case summary { cursor: pointer; font-size: .88rem; color: var(--blue); }
 .sheetbox { display: none; }
+.recruit { margin-top: 16px; border-left: 5px solid var(--amber); background: #FFFBF0; }
+.recruit .rhead { font-weight: 700; margin-bottom: 6px; }
+.recruit p { margin: 6px 0 0; line-height: 1.6; }
+p.ask { margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed var(--line); line-height: 1.6; }
 
 @media (max-width: 720px) {
   nav.tabs { margin-left: 0; width: 100%; flex-wrap: nowrap; overflow-x: auto; gap: 4px; padding-bottom: 2px; scrollbar-width: none; }

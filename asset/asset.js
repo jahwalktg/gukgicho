@@ -97,6 +97,17 @@ function readHash() {
   history.replaceState(null, "", location.pathname);   // 주소창에 숫자를 남기지 않음
 }
 
+// ---------- 모집·문의 (2026-11-02, 지자체 추가 모집 잠정 중단 공지 확인) ----------
+function contactHTML() {
+  const C = state.D.asset.contact;
+  return `<b>${C.callName} ☎ ${C.call}</b> · 보건복지상담센터 ☎ ${C.welfare} · <a href="${C.portal}" target="_blank" rel="noopener">${C.portalName}</a> (새 창) · 주소지 읍·면·동`;
+}
+function recruitHTML() {
+  return `<div class="card recruit"><div class="rhead">📢 신청은 모집 기간에만 — 지역마다 달라요</div>
+    <p>${esc(state.D.asset.recruit.replace(/\s*\[지침 p\.140~141\]$/, ""))} ${P("140~141")}</p>
+    <p class="small"><b>물어볼 곳</b> — ${contactHTML()}</p></div>`;
+}
+
 // ---------- ① 가입 자격 ----------
 function renderForm() {
   const f = state.f, b = f.benefits;
@@ -164,9 +175,10 @@ function update() {
     <div class="sec"><div class="ico">💰</div><h3>우리 집이면 — 통장마다 가늠</h3></div>
     <div class="summary ${picks.length ? "" : "none"}">${picks.length ? `가늠으로 들어갈 수 있어 보이는 통장: <b>${picks.join(" + ")}</b>${r.both ? " (가구 통장과 청년 통장은 함께 가입할 수 있어요)" : ""}` : "지금 넣은 숫자로는 들어갈 수 있는 통장이 보이지 않아요. ✕ 줄을 보고 무엇이 모자란지 확인해 보세요."}
       <div class="btns"><button data-go="compare">🧮 3년 모으면 얼마쯤? (비교·고르기)</button><button class="ghost" data-go="keep">가입 뒤 지킬 것</button></div></div>
-    <div class="acards">${h1}${h2}${ys}</div>`;
+    <div class="acards">${h1}${h2}${ys}</div>
+    ${recruitHTML()}`;
   renderBand(); renderLTable();
-  wrapAll("#judgeOut .acard", "#judgeOut .summary", "#band", "#ltable", "#v-judge .intro");
+  wrapAll("#judgeOut .acard", "#judgeOut .summary", "#judgeOut .recruit p:first-of-type", "#band", "#ltable", "#v-judge .intro");
 }
 
 function renderBand() {
@@ -285,6 +297,7 @@ function renderChoose() {
     <li><b>한 번뿐이에요.</b> 1가구(1인) 1회, 통장마다 1회이고, 지원금을 일부라도 받았으면 그 통장은 다시 가입할 수 없어요(희망저축계좌Ⅰ 일부지급·환수 뒤는 재가입 가능). ${P(3)} · ${P(45)}</li>
     <li><b>다른 지원 통장과 겹치는지</b> 확인해요. 같이 못 하는 예: 청년재직자 내일채움공제, 서울 희망두배청년통장, 경기 청년 노동자 통장 등. 같이 되는 예: 디딤씨앗통장, 청년도약계좌, 청년내일채움공제('23 신규부터). ${P("13~14")}</li>
     <li><b>통장 돈 때문에 수급이 깎이지 않아요.</b> 3년 적립 기간에 통장에 들어간 본인 저축과 근로소득장려금은 소득환산에서 빼요(기간이 끝나면 재산으로 봐요). 다만 본인적립금 통장은 압류방지가 안 돼요. ${P(36)} · ${P(31)}</li>
+    <li><b>신청은 모집 기간에만 받아요.</b> 2026년에는 목표 인원·예산 때문에 추가 모집을 잠정 중단한 지자체도 있어요(예: 남양주시·관악구 희망저축계좌Ⅱ). 주소지 공고를 먼저 확인하고, 궁금하면 ${contactHTML()}. ${P("140~141")}</li>
   </ul>`;
 }
 
@@ -355,7 +368,7 @@ function renderKeep() {
     ${k.kind === "youth" ? "<li>군입대·임신출산으로 퇴직·육아휴직 → <b>특별 적립중지(2년)</b>, 가입 기간이 5년으로 늘어요(희망일 7일 전, 증빙 필요)</li>" : ""}
     <li>통장에 압류·가압류 통지가 왔어요 → 풀 수 없으면 중도환수예요</li>
     <li>이사(전출입)했어요 → 새 주소지에서 관리가 이어지는지 확인</li>
-  </ul></div>
+  </ul><p class="small ask"><b>물어볼 곳</b> — ${contactHTML()}. 내 통장 적립 내역은 자산형성포털에서도 볼 수 있어요.</p></div>
 
   <div class="sec"><div class="ico">🎓</div><h3>만기 때 할 것</h3></div>
   <div class="card"><ul class="tips">
@@ -389,7 +402,7 @@ const CHECK = [
   ["매달 넣을 금액", "10만원이면 지원은 다 받아요. 12개월 누적 미납은 환수라 무리 없는 금액으로. 자동이체 1~20일.", "18"],
   ["자활근로 사업단 참여", "사업단(시장진입·시간제·청년자립도전·사회서비스형)이면 내일키움장려금 20만 + 수익금 15만 이내. 전월 12일 실근무.", "24"],
   ["받는 조건을 미리 약속", "Ⅰ은 3년+6개월 안 탈수급 계획, Ⅱ·청년은 교육 10시간·자금사용계획서. 못 지키면 받는 돈(일부지급·환수)도 설명.", "43·55·73"],
-  ["서류와 모집 차수", "참여(변경) 신청서·저축동의서, 자가진단표, 개인정보 수집·이용·제공 동의서, 기타. 모집은 차수별 일정(2026 Ⅰ은 2·7·10월 차수, 변동 가능).", "37·140"],
+  ["서류와 모집 차수", "참여(변경) 신청서·저축동의서, 자가진단표, 개인정보 수집·이용·제공 동의서, 기타. 모집은 차수별 일정(지침상 2·7·10월 차수)이지만, 2026년에는 추가 모집을 잠정 중단한 지자체가 있어(예: 남양주시·관악구 Ⅱ) 주소지 공고를 먼저 확인. 콜센터 1522-3690.", "37·140"],
 ];
 const CASES = [
   { id: "A", t: "3인 생계수급, 엄마가 시장진입형 사업단", f: { n: 3, benefits: { s: true, u: true }, recognized: 900000, earned: 1614080, jahwal: "ok", youths: [] },
@@ -454,7 +467,7 @@ function printSheet() {
 }
 
 // ---------- 시작 ----------
-Promise.all(["../data/2026.json?v=7", "../data/dict.json?v=6", "../data/asset_terms.json?v=1"].map((u) => fetch(u).then((r) => r.json()))).then(([D, dict, AT]) => {
+Promise.all(["../data/2026.json?v=8", "../data/dict.json?v=6", "../data/asset_terms.json?v=1"].map((u) => fetch(u).then((r) => r.json()))).then(([D, dict, AT]) => {
   state.D = D;
   // 쉬운 말: 가늠표 사전(easy·자활 용어) + 자산형성 사전(같은 말이면 자산형성 쪽)
   const jt = {}; (dict.jahwal || []).forEach((x) => { jt[x.t] = x.e; });
