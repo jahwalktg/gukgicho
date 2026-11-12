@@ -5,7 +5,8 @@ import { loadSearch, search, pageRef, SOURCES } from "./search.js?v=6";
 const VERSION = "v0.6";
 const CONTACT = { mail: "jahwalktg@gmail.com" };   // 2026-10-26 전화번호는 뺌(메일만)
 // 의견 설문(구글 설문 「국기초 가늠표 — 의견 보내기」, jahwalktg 계정, 2026-10-26). 미리 채우기: 종류·내용·쓰던 화면
-const FB_FORM = { url: "https://docs.google.com/forms/d/e/1FAIpQLSe3RkitFOW0kYWmdlF8xSf4tufd_9ZS-uC0OaRBpyVcdclE_w/viewform", type: "entry.390376584", text: "entry.1630338836", ctx: "entry.531365058" };
+// 통합 설문 「김태균 도구 의견·문의」(2026-11-13) — 사이트·화면 칸으로 어디서 왔는지 구분. 옛 가늠표 전용 설문은 보관만
+const FB_FORM = { url: "https://docs.google.com/forms/d/e/1FAIpQLSeLbEHToGS4f1OqD_MUcwBTR7lm_tWQ6YiQonG1BaHVspLeZQ/viewform", site: "entry.743554503", screen: "entry.187621732", text: "entry.320453185" };
 // 종류 보기는 설문 보기와 글자까지 같아야 미리 채워진다
 const FB_TYPES = ["숫자나 계산이 틀렸어요", "근거 쪽수나 지침 내용이 다른 것 같아요", "쉬운 말 풀이가 이상하거나 어려워요", "글로 쓴 상황을 잘못 읽어요", "화면이 불편해요 (휴대폰·인쇄·버튼)", "이런 기능이 있으면 좋겠어요", "고맙다는 말 / 그 밖"];
 const $ = (s, r = document) => r.querySelector(s);
@@ -565,7 +566,7 @@ function openFeedback() {
   </div></div>`;
   const body = () => `[국기초 가늠표 ${VERSION} · ${$("#fb-type").value}]\n\n${$("#fb-text").value}\n\n---\n${ctx}`;
   $("#fb-form").onclick = () => {   // 새 창에 설문을 미리 채워 연다 — 제출은 설문 창에서 직접
-    const q = new URLSearchParams({ usp: "pp_url", [FB_FORM.type]: $("#fb-type").value, [FB_FORM.text]: $("#fb-text").value.slice(0, 1500), [FB_FORM.ctx]: ctx });
+    const q = new URLSearchParams({ usp: "pp_url", [FB_FORM.site]: location.pathname.indexOf("/asset") >= 0 ? "2번 국기초 가늠표 · 자산형성 길잡이" : "2번 국기초 가늠표", [FB_FORM.screen]: ctx, [FB_FORM.text]: "[" + $("#fb-type").value + "] " + $("#fb-text").value.slice(0, 1500) });
     window.open(FB_FORM.url + "?" + q.toString(), "_blank", "noopener");
     $("#fb-msg").textContent = "새 창의 설문에서 내용을 확인하고 「제출」을 눌러 주세요. 창이 안 열리면 '내용 복사' 뒤 메일로 보내 주세요.";
   };
